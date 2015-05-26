@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editText"
         android:text="Hello World!!"
-        android:layout_marginLeft="80dp"
+        android:layout_marginLeft="81dp"
         android:layout_marginStart="81dp"
         android:layout_marginTop="177dp"
         android:layout_alignParentTop="true"
