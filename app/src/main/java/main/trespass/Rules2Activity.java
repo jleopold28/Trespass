@@ -14,7 +14,7 @@ public class Rules2Activity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rules);
+        setContentView(R.layout.activity_rules2);
 
         Button next = (Button) this.findViewById(R.id.RulesActivity2NextButton);
         next.setOnClickListener(buttonClickHandler);

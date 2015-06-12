@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="main.trespass.Rules4Activity"
     android:background="#ff99d9ea"
-    android:id="@+id/">
+    >
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView4"
-        android:src="@drawable/typeB"
+        android:src="@drawable/typeb"
         android:layout_alignTop="@+id/textView9"
         android:layout_alignRight="@+id/RulesActivity4NextButton"
         android:layout_alignEnd="@+id/RulesActivity4NextButton"
