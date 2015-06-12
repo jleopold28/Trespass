@@ -8,23 +8,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-
-public class Rules2Activity extends Activity {
+public class Rules3Activity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rules);
+        setContentView(R.layout.activity_rules3);
 
-        Button next = (Button) this.findViewById(R.id.RulesActivity2NextButton);
+        Button next = (Button) this.findViewById(R.id.RulesActivity3NextButton);
         next.setOnClickListener(buttonClickHandler);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_rules, menu);
+        getMenuInflater().inflate(R.menu.menu_rules3, menu);
         return true;
     }
 
@@ -46,15 +44,15 @@ public class Rules2Activity extends Activity {
         @Override
         public void onClick(View v){
             switch(v.getId()) {
-                case R.id.RulesActivity2NextButton:
-                    jumpToRules2Screen();
+                case R.id.RulesActivity3NextButton:
+                    jumpToRules3Screen();
                     break;
             }
         }
     };
-    protected void jumpToRules2Screen(){
+    protected void jumpToRules3Screen(){
         Intent intent = new Intent();
-        intent.setClass(this, Rules3Activity.class);
+        intent.setClass(this, Rules4Activity.class);
         startActivity(intent);
     }
 }

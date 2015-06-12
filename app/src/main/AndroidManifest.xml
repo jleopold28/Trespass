@@ -32,6 +32,15 @@
             android:name=".Rules2Activity"
             android:label="@string/title_activity_rules2" >
         </activity>
+        <activity
+            android:name=".Rules3Activity"
+            android:label="@string/title_activity_rules3" >
+        </activity>
+        <activity
+            android:name=".Rules4Activity"
+            android:label="@string/title_activity_rules4" >
+        </activity>
+
     </application>
 
 </manifest>

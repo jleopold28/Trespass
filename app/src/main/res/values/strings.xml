@@ -7,4 +7,6 @@
     <string name="title_activity_start">StartActivity</string>
     <string name="title_activity_rules">RulesActivity</string>
     <string name="title_activity_rules2">Rules2Activity</string>
+    <string name="title_activity_rules4">Rules4Activity</string>
+    <string name="title_activity_rules3">Rules3Activity</string>
 </resources>

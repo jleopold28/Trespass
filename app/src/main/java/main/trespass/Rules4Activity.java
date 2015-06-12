@@ -1,30 +1,24 @@
 package main.trespass;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 
-public class Rules2Activity extends Activity {
+public class Rules4Activity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rules);
-
-        Button next = (Button) this.findViewById(R.id.RulesActivity2NextButton);
-        next.setOnClickListener(buttonClickHandler);
-
+        setContentView(R.layout.activity_rules4);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_rules, menu);
+        getMenuInflater().inflate(R.menu.menu_rules4, menu);
         return true;
     }
 
@@ -41,20 +35,5 @@ public class Rules2Activity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-    View.OnClickListener buttonClickHandler = new View.OnClickListener(){
-        @Override
-        public void onClick(View v){
-            switch(v.getId()) {
-                case R.id.RulesActivity2NextButton:
-                    jumpToRules2Screen();
-                    break;
-            }
-        }
-    };
-    protected void jumpToRules2Screen(){
-        Intent intent = new Intent();
-        intent.setClass(this, Rules3Activity.class);
-        startActivity(intent);
     }
 }

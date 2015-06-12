@@ -2,7 +2,6 @@ package main.trespass;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,7 +16,7 @@ public class RulesActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rules);
 
-        Button next = (Button) this.findViewById(R.id.nextButton);
+        Button next = (Button) this.findViewById(R.id.RulesActivityNextButton);
         next.setOnClickListener(buttonClickHandler);
 
     }
@@ -47,7 +46,7 @@ public class RulesActivity extends Activity {
         @Override
         public void onClick(View v){
             switch(v.getId()) {
-                case R.id.nextButton:
+                case R.id.RulesActivityNextButton:
                     jumpToRules2Screen();
                     break;
             }
