@@ -9,22 +9,21 @@ import android.view.View;
 import android.widget.Button;
 
 
-public class Rules2Activity extends Activity {
+public class Rules6Activity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_rules2);
+        setContentView(R.layout.activity_rules6);
 
-        Button next = (Button) this.findViewById(R.id.RulesActivity2NextButton);
+        Button next = (Button) this.findViewById(R.id.RulesActivity6NextButton);
         next.setOnClickListener(buttonClickHandler);
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_rules, menu);
+        getMenuInflater().inflate(R.menu.menu_rules6, menu);
         return true;
     }
 
@@ -42,19 +41,20 @@ public class Rules2Activity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
     View.OnClickListener buttonClickHandler = new View.OnClickListener(){
         @Override
         public void onClick(View v){
             switch(v.getId()) {
-                case R.id.RulesActivity2NextButton:
-                    jumpToRules3Screen();
+                case R.id.RulesActivity6NextButton:
+                    jumpToRules7Screen();
                     break;
             }
         }
     };
-    protected void jumpToRules3Screen(){
+    protected void jumpToRules7Screen(){
         Intent intent = new Intent();
-        intent.setClass(this, Rules3Activity.class);
+        intent.setClass(this, Rules7Activity.class);
         startActivity(intent);
     }
 }

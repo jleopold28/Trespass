@@ -45,12 +45,12 @@ public class Rules3Activity extends Activity {
         public void onClick(View v){
             switch(v.getId()) {
                 case R.id.RulesActivity3NextButton:
-                    jumpToRules3Screen();
+                    jumpToRules4Screen();
                     break;
             }
         }
     };
-    protected void jumpToRules3Screen(){
+    protected void jumpToRules4Screen(){
         Intent intent = new Intent();
         intent.setClass(this, Rules4Activity.class);
         startActivity(intent);

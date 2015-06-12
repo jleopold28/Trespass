@@ -53,8 +53,8 @@ public class Rules5Activity extends Activity {
         }
     };
     protected void jumpToRules6Screen(){
-        //Intent intent = new Intent();
-        //intent.setClass(this, Rules6Activity.class);
-        //startActivity(intent);
+        Intent intent = new Intent();
+        intent.setClass(this, Rules6Activity.class);
+        startActivity(intent);
     }
 }

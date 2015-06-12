@@ -44,6 +44,14 @@
             android:name=".Rules5Activity"
             android:label="@string/title_activity_rules5" >
         </activity>
+        <activity
+            android:name=".Rules6Activity"
+            android:label="@string/title_activity_rules6" >
+        </activity>
+        <activity
+            android:name=".Rules7Activity"
+            android:label="@string/title_activity_rules7" >
+        </activity>
     </application>
 
 </manifest>

@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="C. A player may move a peice along a clear path and jump peices as described in &apos;B&apos;"
+        android:text="3. A player may move a peice along a clear path and jump peices as described in &apos;2&apos;"
         android:id="@+id/textView9"
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"

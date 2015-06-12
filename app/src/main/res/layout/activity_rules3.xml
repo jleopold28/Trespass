@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="A. On any one turn, a player may move forward and/or sideways as many circles as desired, providing the path is clear."
+        android:text="1. On any one turn, a player may move forward and/or sideways as many circles as desired, providing the path is clear."
         android:id="@+id/textView9"
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
