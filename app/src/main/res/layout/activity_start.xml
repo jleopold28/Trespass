@@ -11,11 +11,124 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="start"
-        android:id="@+id/textView2"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Username"
+        android:id="@+id/usernameTitle"
+        android:layout_marginTop="30dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Avatar"
+        android:id="@+id/avatarTitle"
+        android:layout_marginTop="42dp"
+        android:layout_below="@+id/usernameText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usernameText"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/usernameTitle"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="146dp" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelB"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/avatar2IB"
+        android:layout_alignEnd="@+id/avatar2IB"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="onClickCancelB" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:id="@+id/okB"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/usernameText"
+        android:layout_alignEnd="@+id/usernameText"
+        android:onClick="onClickOkB"
+        android:layout_alignLeft="@+id/avatar3IB"
+        android:layout_alignStart="@+id/avatar3IB" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/avatar0IB"
+        android:src="@drawable/selectoravatar0"
+        android:clickable="true"
+        android:focusableInTouchMode="false"
+        android:focusable="false"
+        android:onClick="onClickAvatar0IB"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/avatarTitle"
+        android:layout_toEndOf="@+id/avatarTitle" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/avatar1IB"
+        android:src="@drawable/selectoravatar1"
+        android:focusable="false"
+        android:clickable="true"
+        android:focusableInTouchMode="false"
+        android:layout_marginLeft="39dp"
+        android:layout_marginStart="39dp"
+        android:onClick="onClickAvatar1IB"
+        android:layout_alignTop="@+id/avatar0IB"
+        android:layout_toRightOf="@+id/avatar0IB"
+        android:layout_toEndOf="@+id/avatar0IB" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/avatar2IB"
+        android:layout_marginTop="39dp"
+        android:src="@drawable/selectoravatar2"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:clickable="true"
+        android:layout_below="@+id/avatar0IB"
+        android:layout_alignLeft="@+id/avatar0IB"
+        android:layout_alignStart="@+id/avatar0IB"
+        android:onClick="onClickAvatar2IB" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/avatar3IB"
+        android:src="@drawable/selectoravatar3"
+        android:layout_alignTop="@+id/avatar2IB"
+        android:layout_alignLeft="@+id/avatar1IB"
+        android:layout_alignStart="@+id/avatar1IB"
+        android:onClick="onClickAvatar3IB"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/debugText"
+        android:layout_below="@+id/avatar2IB"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
 </RelativeLayout>
+
