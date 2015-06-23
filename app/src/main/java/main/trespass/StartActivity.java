@@ -98,8 +98,9 @@ public class StartActivity extends Activity {
     }
 
     public void onClickOkB (View v) {
-        Player player = new Player(usernameTextField.getText().toString(), avatar);
-        debugText.setText(player.getUsername() + Integer.toString(player.getAvatar())); //Debug
+        GameDriver.createPlayer(usernameTextField.getText().toString(), avatar);
+        //Player player = new Player(usernameTextField.getText().toString(), avatar);
+        //debugText.setText(player.getUsername() + Integer.toString(player.getAvatar())); //Debug
     }
 
     public void onClickCancelB (View v) {

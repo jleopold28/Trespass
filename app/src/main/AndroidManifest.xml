@@ -52,6 +52,10 @@
             android:name=".Rules7Activity"
             android:label="@string/title_activity_rules7" >
         </activity>
+        <activity
+            android:name=".InitializationActivity"
+            android:label="@string/title_activity_initialization" >
+        </activity>
     </application>
 
 </manifest>

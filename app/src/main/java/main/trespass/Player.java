@@ -12,6 +12,7 @@ public class Player {
     private int avatar;
     private int secretNum;
 
+
     public Player() {
         this.username = "Username";
         this.avatar = 0;
