@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 
 
@@ -19,7 +20,6 @@ public class InitializationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initialization);
         secretNumberText = (EditText) this.findViewById(R.id.secretNumber);
-        init = new InitializationObject();
     }
 
     @Override
@@ -42,5 +42,8 @@ public class InitializationActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void onClickStart (View v) {
+        GameDriver.setSecretNumber(secretNumberText.getText().toString());
     }
 }
