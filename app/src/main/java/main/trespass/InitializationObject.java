@@ -7,8 +7,8 @@ public class InitializationObject {
     //tile arrangmet
     int[][] tiles = new int[2][5];
 
-    public InitializationObject(){
-
+    public InitializationObject(int[][] arr){
+        this.tiles = arr;
     }
 
 }

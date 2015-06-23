@@ -11,9 +11,15 @@ public class GameDriver {
         Player p = new Player(username,avatar);
     }
 
-    public static void setSecretNumber(int num){
-        p.setSecretNum(num);
+    public static void setSecretNumber(String num){
+        int n = Integer.parseInt(num);
+        p.setSecretNum(n);
     }
+
+    public static void createInitializationObject(int[][] arr){
+        InitializationObject init = new InitializationObject(arr);
+    }
+
     public static void playGame(){
         //send player and init to storage
         //send moves

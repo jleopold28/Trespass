@@ -57,12 +57,12 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OK"
-        android:id="@+id/okB"
+        android:text="Next"
+        android:id="@+id/nextB"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/usernameText"
         android:layout_alignEnd="@+id/usernameText"
-        android:onClick="onClickOkB"
+        android:onClick="onClicknextB"
         android:layout_alignLeft="@+id/avatar3IB"
         android:layout_alignStart="@+id/avatar3IB" />
 
