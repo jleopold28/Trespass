@@ -97,8 +97,9 @@ public class StartActivity extends Activity {
 
     }
 
-    public void onClickOkB (View v) {
+    public void onClicknextB (View v) {
         GameDriver.createPlayer(usernameTextField.getText().toString(), avatar);
+        startActivity(new Intent(StartActivity.this, InitializationActivity.class));
         //Player player = new Player(usernameTextField.getText().toString(), avatar);
         //debugText.setText(player.getUsername() + Integer.toString(player.getAvatar())); //Debug
     }
