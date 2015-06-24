@@ -16,8 +16,9 @@ public class GameDriver {
         p.setSecretNum(n);
     }
 
-    public static void createInitializationObject(int[][] arr){
-        InitializationObject init = new InitializationObject(arr);
+    public static void createInitializationObject(String[][] arr){
+        //convert to ints
+        //InitializationObject init = new InitializationObject(arr);
     }
 
     public static void playGame(){
