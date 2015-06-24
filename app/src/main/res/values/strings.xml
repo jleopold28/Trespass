@@ -13,4 +13,5 @@
     <string name="title_activity_rules6">Rules6Activity</string>
     <string name="title_activity_rules7">Rules7Activity</string>
     <string name="title_activity_initialization">InitializationActivity</string>
+    <string name="title_activity_game">GameActivity</string>
 </resources>

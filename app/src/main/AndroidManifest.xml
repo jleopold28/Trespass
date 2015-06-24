@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="main.trespass" >
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -56,6 +57,10 @@
         <activity
             android:name=".InitializationActivity"
             android:label="@string/title_activity_initialization" >
+        </activity>
+        <activity
+            android:name=".GameActivity"
+            android:label="@string/title_activity_game" >
         </activity>
     </application>
 

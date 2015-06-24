@@ -5,10 +5,14 @@ package main.trespass;
  */
 public class InitializationObject {
     //tile arrangmet
-    int[][] tiles = new int[2][5];
+    private int[][] tiles;
 
     public InitializationObject(int[][] arr){
         this.tiles = arr;
+    }
+
+    public int[][] getTiles(){
+        return tiles;
     }
 
 }

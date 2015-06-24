@@ -1,7 +1,9 @@
 package main.trespass;
 
 import android.app.Activity;
-import android.support.v7.app.ActionBarActivity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,17 +11,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
+public class InitializationActivity extends Activity implements View.OnClickListener, DialogInterface.OnClickListener{
 
-public class InitializationActivity extends Activity {
-
-    //create InitializationObject
     private EditText secretNumberText;
-    private TextView debugText2;
     private EditText num00text, num01text, num02text, num03text, num04text,
                      num10text, num11text, num12text, num13text, num14text;
-    private String[][] arr;
+    private int[][] arr;
+    private AlertDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,6 @@ public class InitializationActivity extends Activity {
         num12text = (EditText) this.findViewById(R.id.num12);
         num13text = (EditText) this.findViewById(R.id.num13);
         num14text = (EditText) this.findViewById(R.id.num14);
-
-        debugText2 = (TextView) this.findViewById(R.id.debugText2); // Debug
     }
 
     @Override
@@ -61,31 +60,78 @@ public class InitializationActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
-    //arr[0][0] = ?
 
     public void fillArray(){
-        String num00 = num00text.getText().toString();
-        String num01 = num01text.getText().toString();
-        String num02 = num02text.getText().toString();
-        String num03 = num03text.getText().toString();
-        String num04 = num04text.getText().toString();
+        int num00 = (num00text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num00text.getText().toString());
+        int num01 = (num01text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num01text.getText().toString());
+        int num02 = (num02text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num02text.getText().toString());
+        int num03 = (num03text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num03text.getText().toString());
+        int num04 = (num04text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num04text.getText().toString());
 
-        String num10 = num10text.getText().toString();
-        String num11 = num11text.getText().toString();
-        String num12 = num12text.getText().toString();
-        String num13 = num13text.getText().toString();
-        String num14 = num14text.getText().toString();
+        int num10 = (num10text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num10text.getText().toString());
+        int num11 = (num11text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num11text.getText().toString());
+        int num12 = (num12text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num12text.getText().toString());
+        int num13 = (num13text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num13text.getText().toString());
+        int num14 = (num14text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num14text.getText().toString());
 
-        arr = new String[][]{{num00,num01,num02,num03,num04},
+        arr = new int[][]{{num00,num01,num02,num03,num04},
                 {num10,num11,num12,num13,num14}};
 
     }
+    public void onClick(View v){
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setMessage("You must use the numbers 0-9 only once.")
+                .setTitle("Error!")
+                .setPositiveButton("OK",this)
+                .setCancelable(false)
+                .create();
+                ad.show();
+    }
+    public void onClick2(View v){
+        AlertDialog ad = new AlertDialog.Builder(this)
+                .setMessage("You must enter a secret number.")
+                .setTitle("Error!")
+                .setPositiveButton("OK",this)
+                .setCancelable(false)
+                .create();
+        ad.show();
+    }
+    public void onClick(DialogInterface dialog, int which){}
 
-    public void onClickFindMatch (View v) {
-        //GameDriver.setSecretNumber(secretNumberText.getText().toString());
+    public void validateSecretNumber(View v){
+        if(secretNumberText.getText().toString().trim().length() == 0){
+            onClick2(v);
+        }
+        else{
+            validateArray(v);
+        }
+    }
+    public void validateArray(View v) {
         fillArray();
-        debugText2.setText(arr[0][0] + ' ' + arr[0][1] + ' ' + arr[0][2] + ' ' + arr[0][3] + ' ' + arr[0][4] + ' ' + arr[1][0] + ' ' + arr[1][1] + ' ' + arr[1][2] + arr[1][3] + arr[1][4]
-        );
-        GameDriver.createInitializationObject(arr);
+        Set set = new HashSet<Integer>();
+        for(int[] row : arr){
+            for(int col : row){
+                set.add(col);
+            }
+        }
+        if(set.size() != 10){
+            onClick(v);
+        }
+        else{
+            goToGameScreen(v);
+        }
+
+    }
+
+    public void onClickFindMatch(View v) {
+        validateSecretNumber(v);
+    }
+    public void goToGameScreen(View v){
+        int secretNum = Integer.parseInt(secretNumberText.getText().toString());
+        GameDriver g = GameDriver.getInstance();
+        g.setSecretNumber(secretNum);
+        g.createInitializationObject(arr);
+        g.playGame();
+        startActivity(new Intent(InitializationActivity.this, GameActivity.class));
     }
 }
