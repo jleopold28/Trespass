@@ -13,7 +13,7 @@ public class InitializationActivity extends Activity {
 
     //create InitializationObject
     private EditText secretNumberText;
-    private InitializationObject init;
+    private int[][] arr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,10 @@ public class InitializationActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+    //arr[0][0] = ?
+
     public void onClickStart (View v) {
         GameDriver.setSecretNumber(secretNumberText.getText().toString());
+        GameDriver.createInitializationObject(arr);
     }
 }
