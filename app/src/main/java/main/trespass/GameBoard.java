@@ -16,16 +16,23 @@ public class GameBoard {
         return gameBoard[rowCount][colCount];
     }
     public void setMove(Tile t1, Tile t2){
+        //moving from T1 to T2
+
         int startRow = t1.getRow();
         int startCol = t1.getCol();
         int startNumber = t1.getNumber();
+        boolean isPlayerPiece = t1.isPlayerPiece();
 
         int endRow = t2.getRow();
         int endCol = t2.getCol();
-        int endNumber = t2.getNumber();
 
-        gameBoard[startRow][startCol].setNumber(endNumber);
+        //set T1 to blank
+        gameBoard[startRow][startCol].setBlank(true);
+        gameBoard[startRow][startCol].setIsPlayerPiece(false);
+
+        //set T2 to new number
         gameBoard[endRow][endCol].setNumber(startNumber);
+        gameBoard[endRow][endCol].setIsPlayerPiece(isPlayerPiece);
     }
 
     public int checkForWin(){
