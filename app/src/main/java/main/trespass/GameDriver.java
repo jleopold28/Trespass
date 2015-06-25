@@ -17,26 +17,43 @@ public class GameDriver {
     }
 
     public static void createPlayer(String username, int avatar){
-        Player p = new Player(username,avatar);
+        p = new Player(username,avatar);
     }
 
     public static void setSecretNumber(int num){
-        //int n = Integer.parseInt(num);
-        //p.setSecretNum(num);
-        System.out.println(num);
+        p.setSecretNum(num);
     }
 
     public static void createInitializationObject(int[][] arr){
-        //Convert String array to int array
-        InitializationObject init = new InitializationObject(arr);
+        init = new InitializationObject(arr);
     }
 
     public static void playGame(){
-        System.out.println("fuckkkkk\n\n\n");
-        //System.out.println(init.getTiles().toString() + '\n');
-        //System.out.println("Avatar is: " + p.getAvatar() + '\n');
-        //System.out.println("Username is: " + p.getUsername() + '\n');
-        //System.out.println("Secret Number is: " + p.getSecretNum() + '\n');
+        int a = init.getTiles()[0][0];
+        int b = init.getTiles()[0][1];
+        int c = init.getTiles()[0][2];
+        int d = init.getTiles()[0][3];
+        int e = init.getTiles()[0][4];
+        int f = init.getTiles()[1][0];
+        int g = init.getTiles()[1][1];
+        int h = init.getTiles()[1][2];
+        int i = init.getTiles()[1][3];
+        int j = init.getTiles()[1][4];
+
+        System.out.println("Tiles:");
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        System.out.println(d);
+        System.out.println(e);
+        System.out.println(f);
+        System.out.println(g);
+        System.out.println(h);
+        System.out.println(i);
+        System.out.println(j);
+        System.out.println("Avatar is: " + p.getAvatar() + '\n');
+        System.out.println("Username is: " + p.getUsername() + '\n');
+        System.out.println("Secret Number is: " + p.getSecretNum() + '\n');
 
         //send player and init to storage
         //send moves
@@ -45,7 +62,4 @@ public class GameDriver {
 
     }
 
-    public static void test(){
-        System.out.println("testt");
-    }
 }

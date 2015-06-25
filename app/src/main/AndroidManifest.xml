@@ -62,6 +62,10 @@
             android:name=".GameActivity"
             android:label="@string/title_activity_game" >
         </activity>
+        <activity
+            android:name=".ConnectionActivity"
+            android:label="@string/title_activity_connection" >
+        </activity>
     </application>
 
 </manifest>

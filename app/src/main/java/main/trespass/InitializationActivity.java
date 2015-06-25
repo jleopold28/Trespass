@@ -20,7 +20,7 @@ public class InitializationActivity extends Activity implements View.OnClickList
     private EditText num00text, num01text, num02text, num03text, num04text,
                      num10text, num11text, num12text, num13text, num14text;
     private int[][] arr;
-    private AlertDialog dialog;
+    private int secretNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,7 @@ public class InitializationActivity extends Activity implements View.OnClickList
             onClick2(v);
         }
         else{
+            secretNumber = Integer.parseInt(secretNumberText.getText().toString());
             validateArray(v);
         }
     }
@@ -126,12 +127,11 @@ public class InitializationActivity extends Activity implements View.OnClickList
     public void onClickFindMatch(View v) {
         validateSecretNumber(v);
     }
+
     public void goToGameScreen(View v){
-        int secretNum = Integer.parseInt(secretNumberText.getText().toString());
         GameDriver g = GameDriver.getInstance();
-        g.setSecretNumber(secretNum);
+        g.setSecretNumber(secretNumber);
         g.createInitializationObject(arr);
-        g.playGame();
-        startActivity(new Intent(InitializationActivity.this, GameActivity.class));
+        startActivity(new Intent(InitializationActivity.this, ConnectionActivity.class));
     }
 }
