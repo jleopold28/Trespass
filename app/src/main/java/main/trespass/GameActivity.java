@@ -10,8 +10,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 
-public class GameActivity extends Activity {
+public class GameActivity extends Activity implements NotifyInterface {
 
+
+    public interface Notify{
+        public void notifyTileChanges();
+    }
     private GameBoard game;
     private ImageButton gameButtons[][];
     private boolean gameOver = false;
@@ -136,6 +140,9 @@ public class GameActivity extends Activity {
         //    }
         //}
 
+
+    }
+    public void notifyTileChanges(){
 
     }
 }

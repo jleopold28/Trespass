@@ -8,7 +8,7 @@ public class GameDriver {
     private static GameDriver g;
     static Player p;
     static InitializationObject init;
-
+    private static NotifyInterface n;
     public static GameDriver getInstance(){
         if (g == null){
             g = new GameDriver();
@@ -31,6 +31,9 @@ public class GameDriver {
         return init;
     }
 
+    public static void setListener(NotifyInterface n){
+        GameDriver.n = n;
+    }
     public static void playGame(){
         int a = init.getTiles()[0][0];
         int b = init.getTiles()[0][1];
@@ -62,6 +65,7 @@ public class GameDriver {
         //send moves
         //receive moves
         //go to win or lose state /
+        n.notifyTileChanges();
 
     }
 
