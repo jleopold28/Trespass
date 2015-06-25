@@ -9,8 +9,10 @@
 
 
     <TableLayout
-        android:layout_width="400dp"
-        android:layout_height="400dp">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true">
 
         <TableRow
             android:layout_width="match_parent"
@@ -19,31 +21,67 @@
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton"
+                android:id="@+id/IB00"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton2"
+                android:id="@+id/IB01"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton3"
+                android:id="@+id/IB02"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton4"
+                android:id="@+id/IB03"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton5"
+                android:id="@+id/IB04"
+                android:background="@drawable/blank" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB10"
+                android:background="@drawable/blank" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB11"
+                android:background="@drawable/blank" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB12"
+                android:background="@drawable/blank" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB13"
+                android:background="@drawable/blank" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB14"
                 android:background="@drawable/blank" />
         </TableRow>
 
@@ -54,66 +92,31 @@
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton6"
+                android:id="@+id/IB20"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton7"
+                android:id="@+id/IB21"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton8"
+                android:id="@+id/IB22"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton9"
+                android:id="@+id/IB23"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton10"
-                android:background="@drawable/blank" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/imageButton11"
-                android:background="@drawable/blank" />
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/imageButton12"
-                android:background="@drawable/blank" />
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/imageButton13"
-                android:background="@drawable/blank" />
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/imageButton14"
-                android:background="@drawable/blank" />
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:id="@+id/imageButton15"
+                android:id="@+id/IB24"
                 android:background="@drawable/blank" />
         </TableRow>
 
@@ -124,31 +127,31 @@
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton16"
+                android:id="@+id/IB30"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton17"
+                android:id="@+id/IB31"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton18"
+                android:id="@+id/IB32"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton19"
+                android:id="@+id/IB33"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton20"
+                android:id="@+id/IB34"
                 android:background="@drawable/blank" />
         </TableRow>
 
@@ -159,31 +162,66 @@
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton21"
+                android:id="@+id/IB40"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton22"
+                android:id="@+id/IB41"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton23"
+                android:id="@+id/IB42"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton24"
+                android:id="@+id/IB43"
                 android:background="@drawable/blank" />
 
             <ImageButton
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:id="@+id/imageButton25"
+                android:id="@+id/IB44"
+                android:background="@drawable/blank" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB50"
+                android:background="@drawable/blank" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB51"
+                android:background="@drawable/blank" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB52"
+                android:background="@drawable/blank" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB53"
+                android:background="@drawable/blank" />
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:id="@+id/IB54"
                 android:background="@drawable/blank" />
         </TableRow>
     </TableLayout>

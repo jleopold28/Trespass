@@ -27,6 +27,9 @@ public class GameDriver {
     public static void createInitializationObject(int[][] arr){
         init = new InitializationObject(arr);
     }
+    public static InitializationObject getInitializationObject(){
+        return init;
+    }
 
     public static void playGame(){
         int a = init.getTiles()[0][0];
