@@ -5,10 +5,13 @@ package main.trespass;
  * Created by jleopold on 6/23/2015.
  */
 public class GameDriver {
+
     private static GameDriver g;
     static Player p;
     static InitializationObject init;
     private static NotifyInterface n;
+    static GameBoard gb = new GameBoard();
+
     public static GameDriver getInstance(){
         if (g == null){
             g = new GameDriver();
@@ -34,32 +37,17 @@ public class GameDriver {
     public static void setListener(NotifyInterface n){
         GameDriver.n = n;
     }
-    public static void playGame(){
-        int a = init.getTiles()[0][0];
-        int b = init.getTiles()[0][1];
-        int c = init.getTiles()[0][2];
-        int d = init.getTiles()[0][3];
-        int e = init.getTiles()[0][4];
-        int f = init.getTiles()[1][0];
-        int g = init.getTiles()[1][1];
-        int h = init.getTiles()[1][2];
-        int i = init.getTiles()[1][3];
-        int j = init.getTiles()[1][4];
+    public static void setUpGameBoard(){
+        //set values in gb
+        int[][] arr = init.getTiles();
+        gb.getTile(0,0).setNumber(arr[0][0]);
 
-        System.out.println("Tiles:");
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(c);
-        System.out.println(d);
-        System.out.println(e);
-        System.out.println(f);
-        System.out.println(g);
-        System.out.println(h);
-        System.out.println(i);
-        System.out.println(j);
-        System.out.println("Avatar is: " + p.getAvatar() + '\n');
-        System.out.println("Username is: " + p.getUsername() + '\n');
-        System.out.println("Secret Number is: " + p.getSecretNum() + '\n');
+
+
+
+
+    }
+    public static void playGame(){
 
         //send player and init to storage
         //send moves

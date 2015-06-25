@@ -12,7 +12,9 @@ public class GameBoard {
     public GameBoard(){
         gameBoard = new Tile[rowCount][colCount];
     }
-
+    public Tile getTile( int rowCount, int colCount){
+        return gameBoard[rowCount][colCount];
+    }
     public void setMove(Tile t1, Tile t2){
         int startRow = t1.getRow();
         int startCol = t1.getCol();
