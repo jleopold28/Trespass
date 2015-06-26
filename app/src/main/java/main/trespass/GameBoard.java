@@ -69,9 +69,10 @@ public class GameBoard {
      */
     public ArrayList<int[]> getValidTiles(int row, int col) {
         validTiles.clear();
-        forwardValidation(row,col); //get the valid tiles when moving forward
-        slideValidation(row,col); //get the valid tiles when moving left or right
-        jumpValidation(row,col); //get the valid tiles when jumping
+        forwardValidation(row, col); //get the valid tiles when moving forward
+        leftSlideValidation(row, col); //get the valid tiles when moving left or right
+        rightSlideValidation(row, col);
+        jumpValidation(row, col); //get the valid tiles when jumping
         return validTiles;
     }
     private void forwardValidation(int row, int col) {
@@ -79,23 +80,34 @@ public class GameBoard {
             if ((gameBoard[row-1][col].isBlank()) && (!validTiles.contains(boardPos[row-1][col])) ) { //check if the front tile is blank
                 validTiles.add(boardPos[row-1][col]); //the front tile is valid
                 forwardValidation(row-1,col); //get the forward moving valid tiles after moving forward
-                slideValidation(row-1,col); // get the slide moving valid tiles after moving forward
+                leftSlideValidation(row-1,col); // get the slide moving valid tiles after moving forward
+                rightSlideValidation(row-1,col);
                 jumpValidation(row-1,col); // get the jumping valid tiles after moving forward
             }
         }
     }
-    private void slideValidation(int row, int col) {
+    private void leftSlideValidation(int row, int col) {
         if (col>0) {
-            if ((gameBoard[row][col-1].isBlank()) && (!validTiles.contains(boardPos[row][col-1]))) { //check if the left tile is blank
-                validTiles.add(boardPos[row][col-1]); //the left tile is valid
-                slideValidation(row,col-1); //get the slide moving valid tiles after moving to the left
+            if (gameBoard[row][col-1].isBlank()) { //check if the left tile is blank
+                if (!validTiles.contains(boardPos[row][col- 1])) {validTiles.add(boardPos[row][col-1]);} //the left tile is valid
+                leftSlideValidation(row,col-1); //get the slide moving valid tiles after moving to the left
                 jumpValidation(row,col-1); //get the jumping valid tiles after moving to the left
             }
         }
+    }
+    private void rightSlideValidation(int row, int col) {
         if (col<colCount-1) {
-            if ((gameBoard[row][col+1].isBlank()) && (!validTiles.contains(boardPos[row][col+1]))) { //check if the right tile is blank
-                validTiles.add(boardPos[row][col+1]); //the right tile is valid
-                slideValidation(row,col+1); //get the slide moving valid tiles after moving to the right
+            //System.out.println(boardPos[row][col+1][0]+","+boardPos[row][col+1][1]);
+            //System.out.println(validTiles.contains(boardPos[row][col+1]));
+            //if (row==5 && col==2) {
+            //    System.out.println(validTiles.contains(boardPos[row][col+1]));
+            //    for(int[] intarr:validTiles){
+            //        System.out.println(intarr[0]+","+intarr[1]);
+            //    }
+            //}
+            if (gameBoard[row][col+1].isBlank()) { //check if the right tile is blank
+                if (!validTiles.contains(boardPos[row][col+1])) {validTiles.add(boardPos[row][col+1]);} //the right tile is valid
+                rightSlideValidation(row,col+1); //get the slide moving valid tiles after moving to the right
                 jumpValidation(row,col+1); //get the jumping valid tiles after moving to the right
             }
         }

@@ -10,12 +10,12 @@ import java.util.ArrayList;
 public class Test {
     public static void main(String[] args) {
         GameBoard gameBoard = new GameBoard();
-        gameBoard.getTile(5,2).setBlank(false);
+        gameBoard.getTile(5,1).setBlank(false);
         gameBoard.getTile(3,2).setBlank(false);
         ArrayList<int[]> result = gameBoard.getValidTiles(5,1);
         System.out.println(result.size());
         for(int[] intarr:result){
-            System.out.println(intarr[0]+","+intarr[1]);
+           System.out.println(intarr[0]+","+intarr[1]);
         }
 
         /*
