@@ -16,7 +16,7 @@ public class GameActivity extends Activity implements NotifyInterface {
     public interface Notify{
         public void notifyTileChanges();
     }
-    private GameBoard game;
+
     private ImageButton gameButtons[][];
     private boolean gameOver = false;
     private boolean pieceSelected = false;
@@ -63,9 +63,6 @@ public class GameActivity extends Activity implements NotifyInterface {
         gameButtons[5][2] = (ImageButton) findViewById(R.id.IB52);
         gameButtons[5][3] = (ImageButton) findViewById(R.id.IB53);
         gameButtons[5][4] = (ImageButton) findViewById(R.id.IB54);
-
-        game = new GameBoard();
-
         startNewGame();
     }
 
@@ -126,21 +123,9 @@ public class GameActivity extends Activity implements NotifyInterface {
         String num54 = "num" + arr[1][4];
         gameButtons[5][4].setBackgroundResource(getResources().getIdentifier(num54,"drawable",this.getPackageName()));
 
-        //gameButtons[4][0].setBackgroundDrawable(getResources().getIdentifier(test, "drawable","com.app"));
-        //for(int row = 0; row < 2; row++){
-        //    for(int col = 0; col < 5; col++){
-                //gameButtons[row][col].setBackground(getResources().getDrawable(R.drawable.red));
-        //        gameButtons[row][col].setBackgroundDrawable(getResources().getDrawable(R.drawable.red));
-        //    }
-        //}
-
-        //for(int row = 4; row < 6; row++){
-        //    for(int col = 0; col < 5; col++){
-        //        gameButtons[row][col].setBackgroundDrawable(getResources().getDrawable(R.drawable.green));
-        //    }
-        //}
-
-
+        //set up oppenent side
+        g.setUpGameBoard();
+        g.playGame();
     }
     public void notifyTileChanges(){
 

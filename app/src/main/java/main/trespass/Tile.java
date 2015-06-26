@@ -5,19 +5,30 @@ package main.trespass;
  */
 public class Tile {
     private int number;
+    private boolean isPlayerPiece = false;
+    private boolean isBlank = true;
     private int row;
     private int col;
-    private boolean isPlayerPiece;
-
-    public Tile(int number, int row,int col, boolean isPlayerPiece){
-        this.number = number;
-        this.row = row;
-        this.col = col;
-        this.isPlayerPiece = isPlayerPiece;
-    }
 
     public void setNumber(int n){
         this.number = n;
+        this.isBlank = false;
+    }
+    public void setBlank(boolean b){
+        this.isBlank = b;
+    }
+    public void setIsPlayerPiece(boolean b){
+        this.isPlayerPiece = b;
+    }
+    public void setCoordinates(int row, int col){
+        this.row = row;
+        this.col = col;
+    }
+    public boolean isBlank(){
+        return isBlank;
+    }
+    public boolean isPlayerPiece(){
+        return isPlayerPiece;
     }
     public int getNumber(){
         return number;
