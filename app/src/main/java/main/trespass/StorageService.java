@@ -1,9 +1,13 @@
 package main.trespass;
+import android.app.Activity;
+import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 
 /**
@@ -15,10 +19,11 @@ public class StorageService {
     }
     private Socket mSocket;
     private String TAG = StorageService.class.getCanonicalName();
+    private Activity activity;
     /**
      *
      */
-    protected StorageService(){
+    protected StorageService(Context c){
         try {
             mSocket = IO.socket("http://chat.socket.io");
             Log.v("Created IO socket:" + mSocket.toString(), TAG);
@@ -44,5 +49,18 @@ public class StorageService {
     protected boolean storeMove(Move m){
         return true;
     }
+    protected String getDeviceString(){
 
+        final TelephonyManager tm = (TelephonyManager) activity.getBaseContext().getSystemService(Context.TELEPHONY_SERVICE);
+
+        final String tmDevice, tmSerial, androidId;
+        tmDevice = "" + tm.getDeviceId();
+        tmSerial = "" + tm.getSimSerialNumber();
+        androidId = "" + android.provider.Settings.Secure.getString(activity.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+        UUID deviceUuid = new UUID(androidId.hashCode(), ((long)tmDevice.hashCode() << 32) | tmSerial.hashCode());
+        String deviceId = deviceUuid.toString();
+
+        return deviceId;
+    }
 }

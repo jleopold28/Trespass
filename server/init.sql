@@ -14,8 +14,11 @@ create table tb_game
 (
 	game integer primary key default nextval('sq_pk_game'),
 	player_1 integer not null references tb_entity,
+	player_1_secret integer not null,
+	player_1_socket varchar not null,
 	player_2 integer not null references tb_entity,
-	game_status integer not null references tb_game_status,
+	player_2_secret integer not null,
+	player_2_socket varchar not null,
 	started timestamp not null default now(),
 	finished timestamp,
 	aborted timestamp,
