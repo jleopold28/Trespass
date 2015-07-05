@@ -89,7 +89,7 @@ public class GameDriver {
             //notify
         //while no win condition
 
-        n.notifyTileChanges();
+        //n.notifyTileChanges();
 
     }
 

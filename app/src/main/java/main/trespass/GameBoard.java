@@ -50,6 +50,9 @@ public class GameBoard {
         //set T2 to new number
         gameBoard[endRow][endCol].setNumber(startNumber);
         gameBoard[endRow][endCol].setIsPlayerPiece(isPlayerPiece);
+
+        //set T2 is not blank
+        gameBoard[endRow][endCol].setBlank(false);
     }
 
     public int checkForWin(){
