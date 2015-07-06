@@ -13,6 +13,7 @@ public class GameBoard {
     private final int colCount = 5;
 
     private ArrayList<int[]> validTiles = new ArrayList<>();
+    //private Tile validTiles[];
 
     public GameBoard(){
         gameBoard = new Tile[rowCount][colCount];

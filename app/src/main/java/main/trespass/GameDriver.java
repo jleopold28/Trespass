@@ -44,7 +44,7 @@ public class GameDriver {
         int[][] arr = init.getTiles();
         gb.getTile(4,0).setNumber(arr[0][0]);
         gb.getTile(4,0).setIsPlayerPiece(true);
-        gb.getTile(4,0).setCoordinates(4,0);
+        //gb.getTile(4,0).setCoordinates(4,0);
         gb.getTile(4,1).setNumber(arr[0][1]);
         gb.getTile(4,1).setIsPlayerPiece(true);
         gb.getTile(4,2).setNumber(arr[0][2]);
@@ -79,18 +79,28 @@ public class GameDriver {
         //gb.getTile(1,4).setNumber();
     }
     public static void playGame(){
-        //who goes first?
-        //server generates random num (1 or 2)
-        //chooses who goes first
-        //loop
+        while( gb.checkForWin() == 0){
+
+            //who goes first?
+            //server generates random num (1 or 2)
+            //chooses who goes first
+            //loop
             //player 1
             //notify
             //player 2
             //notify
-        //while no win condition
+            //while no win condition
 
-        //n.notifyTileChanges();
+            //n.notifyTileChanges();
+        }
+        if(gb.checkForWin() == 1){
 
+            //player 1 wins -> splash screen
+        }
+        if(gb.checkForWin() == 2){
+
+            //player 2 wins -> splash screen
+        }
     }
 
 }
