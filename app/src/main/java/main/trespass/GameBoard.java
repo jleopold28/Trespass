@@ -70,6 +70,14 @@ public class GameBoard {
     * return  An ArrayList of arrays, each array has two indices, the first index is the row of the
     *         valid tile, and the second index is the column of the valid tile
      */
+    public ArrayList<Tile> getValidTilesObj(int row, int col) {
+        getValidTiles(row,col);
+        ArrayList<Tile> result = new ArrayList<>();
+        for (int[] pos: validTiles) {
+            result.add(gameBoard[pos[0]][pos[1]]);
+        }
+        return result;
+    }
     public ArrayList<int[]> getValidTiles(int row, int col) {
         validTiles.clear();
         forwardValidation(row, col); //get the valid tiles when moving forward
