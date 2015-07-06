@@ -126,6 +126,9 @@ public class GameActivity extends Activity implements NotifyInterface {
         gameButtons[5][4].setBackgroundResource(getResources().getIdentifier(num54,"drawable",this.getPackageName()));
 
         //set up oppenent side
+        //String num00 = "oppnum" + ??
+        //gameButtons[0][0].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
         g.setUpGameBoard();
         g.playGame();
     }
