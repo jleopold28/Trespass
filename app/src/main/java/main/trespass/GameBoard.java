@@ -71,8 +71,8 @@ public class GameBoard {
     * return  An ArrayList of arrays, each array has two indices, the first index is the row of the
     *         valid tile, and the second index is the column of the valid tile
      */
-    public ArrayList<Tile> getValidTilesObj(int row, int col) {
-        getValidTiles(row,col);
+    public ArrayList<Tile> getValidTilesObj(Tile aTile) {
+        getValidTiles(aTile.getRow(),aTile.getCol());
         ArrayList<Tile> result = new ArrayList<>();
         for (int[] pos: validTiles) {
             result.add(gameBoard[pos[0]][pos[1]]);

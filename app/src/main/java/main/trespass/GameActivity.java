@@ -136,43 +136,41 @@ public class GameActivity extends Activity implements NotifyInterface {
 
     }
 
-    int[] prevTile = new int[] {-1,-1};
+    Tile prevTile = null;
     boolean hasNumSelected = false;
     //for image button at 5,0
     public void clickOnIB50(View v) {
-        clickOnIB(5,0);
+        clickOnIB(g.gb.getTile(5,0));
     }
 
     //for image button at 3,0
     public void clickOnIB30(View v) {
-        clickOnIB(3,0);
+        clickOnIB(g.gb.getTile(3,0));
     }
 
-    public void clickOnIB(int r, int c) {
-        if (g.gb.getTile(r,c).isBlank()) {
+    public void clickOnIB(Tile currTile) {
+        if (currTile.isBlank()) {
             if (hasNumSelected) {
-                g.gb.setMove(g.gb.getTile(prevTile[0],prevTile[1]),g.gb.getTile(r,c));
-                gameButtons[r][c].setBackgroundResource(getResources().
-                        getIdentifier("num" + Integer.toString(g.gb.getTile(prevTile[0],prevTile[1]).getNumber()), "drawable", this.getPackageName()));
-                gameButtons[prevTile[0]][prevTile[1]].setBackgroundResource(R.drawable.blank);
-                prevTile[0]=-1;
-                prevTile[1]=-1;
+                g.gb.setMove(prevTile,currTile);
+                gameButtons[currTile.getRow()][currTile.getCol()].setBackgroundResource(getResources().
+                        getIdentifier("num" + Integer.toString(prevTile.getNumber()), "drawable", this.getPackageName()));
+                gameButtons[prevTile.getRow()][prevTile.getCol()].setBackgroundResource(R.drawable.blank);
+                prevTile = null;
                 hasNumSelected=false;
             }
         } else {
-            if (g.gb.getTile(r,c).isPlayerPiece()) {
+            if (currTile.isPlayerPiece()) {
                 if (hasNumSelected) {
-                    gameButtons[prevTile[0]][prevTile[1]].setBackgroundResource(getResources().
-                            getIdentifier("num" + Integer.toString(g.gb.getTile(prevTile[0], prevTile[1]).getNumber()), "drawable", this.getPackageName()));
+                    gameButtons[prevTile.getRow()][prevTile.getCol()].setBackgroundResource(getResources().
+                            getIdentifier("num" + Integer.toString(prevTile.getNumber()), "drawable", this.getPackageName()));
                     cleanBlankTile();
                 }
-                int currNum = g.gb.getTile(r, c).getNumber();
-                prevTile[0] = r;
-                prevTile[1] = c;
-                gameButtons[r][c].setBackgroundResource(getResources().
+                int currNum = currTile.getNumber();
+                prevTile=currTile;
+                gameButtons[currTile.getRow()][currTile.getCol()].setBackgroundResource(getResources().
                         getIdentifier("selectednum" + Integer.toString(currNum), "drawable", this.getPackageName()));
-                for (int[] validTile : g.gb.getValidTiles(r, c)) {
-                    gameButtons[validTile[0]][validTile[1]].setBackgroundResource(getResources().
+                for (Tile validTile : g.gb.getValidTilesObj(currTile)) {
+                    gameButtons[validTile.getRow()][validTile.getCol()].setBackgroundResource(getResources().
                             getIdentifier("validtile", "drawable", this.getPackageName()));
                 }
                 hasNumSelected = true;
