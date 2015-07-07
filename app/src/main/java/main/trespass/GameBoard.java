@@ -71,14 +71,6 @@ public class GameBoard {
     * return  An ArrayList of arrays, each array has two indices, the first index is the row of the
     *         valid tile, and the second index is the column of the valid tile
      */
-    public ArrayList<Tile> getValidTilesObj(Tile aTile) {
-        getValidTiles(aTile.getRow(),aTile.getCol());
-        ArrayList<Tile> result = new ArrayList<>();
-        for (int[] pos: validTiles) {
-            result.add(gameBoard[pos[0]][pos[1]]);
-        }
-        return result;
-    }
     public ArrayList<int[]> getValidTiles(int row, int col) {
         validTiles.clear();
         forwardValidation(row, col); //get the valid tiles when moving forward
@@ -109,14 +101,6 @@ public class GameBoard {
     }
     private void rightSlideValidation(int row, int col) {
         if (col<colCount-1) {
-            //System.out.println(boardPos[row][col+1][0]+","+boardPos[row][col+1][1]);
-            //System.out.println(validTiles.contains(boardPos[row][col+1]));
-            //if (row==5 && col==2) {
-            //    System.out.println(validTiles.contains(boardPos[row][col+1]));
-            //    for(int[] intarr:validTiles){
-            //        System.out.println(intarr[0]+","+intarr[1]);
-            //    }
-            //}
             if (gameBoard[row][col+1].isBlank()) { //check if the right tile is blank
                 if (!validTiles.contains(boardPos[row][col+1])) {validTiles.add(boardPos[row][col+1]);} //the right tile is valid
                 rightSlideValidation(row,col+1); //get the slide moving valid tiles after moving to the right
@@ -144,5 +128,4 @@ public class GameBoard {
             }
         }
     }
-
 }
