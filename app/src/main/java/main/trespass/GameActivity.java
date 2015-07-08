@@ -27,6 +27,7 @@ public class GameActivity extends Activity implements NotifyInterface {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        Log.d("t", "test");
 
         gameButtons = new ImageButton[6][5];
 
