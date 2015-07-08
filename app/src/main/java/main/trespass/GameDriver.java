@@ -79,7 +79,7 @@ public class GameDriver {
         //gb.getTile(1,4).setNumber();
     }
     public static void playGame(){
-        while( gb.checkForWin() == 0){
+        //while( gb.checkForWin() == 0){
 
             //who goes first?
             //server generates random num (1 or 2)
@@ -92,7 +92,7 @@ public class GameDriver {
             //while no win condition
 
             //n.notifyTileChanges();
-        }
+        //}
         if(gb.checkForWin() == 1){
 
             //player 1 wins -> splash screen
