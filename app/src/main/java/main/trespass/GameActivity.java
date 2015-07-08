@@ -179,7 +179,8 @@ public class GameActivity extends Activity implements NotifyInterface {
     public void clickOnIB(int row, int col) {
         if (g.gb.getTile(row,col).isBlank()) {
             if (hasTileSelected) {
-                g.gb.setMove(g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]),g.gb.getTile(row,col));
+                cleanBlankTile();
+                g.gb.setMove(prevTileCoordinate[0],prevTileCoordinate[1],row,col);
                 gameButtons[row][col].setBackgroundResource(getResources().
                         getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
                 gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);
@@ -190,6 +191,7 @@ public class GameActivity extends Activity implements NotifyInterface {
         } else { //its a game piece
             if (g.gb.getTile(row,col).isPlayerPiece()) { //if its owned by you
                 if (hasTileSelected) { //we have already selected a tile
+
                     gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
                             getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
                     cleanBlankTile();

@@ -33,9 +33,9 @@ public class GameBoard {
     public Tile getTile( int rowCount, int colCount){
         return gameBoard[rowCount][colCount];
     }
-    public void setMove(Tile t1, Tile t2){ //t1 is previous location , t2 is where you are moving to
+    public void setMove(int startRow, int startCol, int endRow, int endCol){ //t1 is previous location , t2 is where you are moving to
         //moving from T1 to T2
-
+        /**
         int startRow = t1.getRow();
         int startCol = t1.getCol();
         int startNumber = t1.getNumber();
@@ -43,14 +43,14 @@ public class GameBoard {
 
         int endRow = t2.getRow();
         int endCol = t2.getCol();
-
+        **/
         //set T1 to blank
         gameBoard[startRow][startCol].setBlank(true);
         gameBoard[startRow][startCol].setIsPlayerPiece(false);
 
         //set T2 to new number
         gameBoard[endRow][endCol].setBlank(false);
-        gameBoard[endRow][endCol].setNumber(startNumber);
+        gameBoard[endRow][endCol].setNumber(gameBoard[startRow][startCol].getNumber());
         gameBoard[endRow][endCol].setIsPlayerPiece(true);
 
     }
