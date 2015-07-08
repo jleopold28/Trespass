@@ -127,4 +127,7 @@ public class GameBoard {
             }
         }
     }
+    public int[] getCoordinate(int row, int col){
+        return boardPos[row][col];
+    }
 }

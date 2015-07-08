@@ -177,7 +177,7 @@ public class GameActivity extends Activity implements NotifyInterface {
 
     public void clickOnIB(int row, int col) {
         if (g.gb.getTile(row,col).isBlank()) {
-            if (hasTileSelected) {
+            if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0],prevTileCoordinate[1]).contains(g.gb.getCoordinate(row,col))) {
                 cleanBlankTile();
                 g.gb.setMove(prevTileCoordinate[0],prevTileCoordinate[1],row,col);
                 gameButtons[row][col].setBackgroundResource(getResources().
