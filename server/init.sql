@@ -15,10 +15,8 @@ create table tb_game
 	game integer primary key default nextval('sq_pk_game'),
 	player_1 integer not null references tb_entity,
 	player_1_secret integer not null,
-	player_1_socket varchar not null,
 	player_2 integer not null references tb_entity,
 	player_2_secret integer not null,
-	player_2_socket varchar not null,
 	started timestamp not null default now(),
 	finished timestamp,
 	aborted timestamp,
@@ -31,7 +29,8 @@ create table tb_waiting_list
 	waiting_list integer primary key default nextval('sq_pk_waiting_list'),
 	player integer not null references tb_entity,
 	requested timestamp not null default now(),
-	filled timestamp not null default now()
+	filled timestamp,
+	invalidated timestamp
 );
 
 create sequence sq_pk_player_move;
