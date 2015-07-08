@@ -138,30 +138,57 @@ public class GameActivity extends Activity implements NotifyInterface {
 
     int[] prevTileCoordinate = new int[]{-1,-1};
     boolean hasTileSelected = false;
-    //for image button at 5,0
-    public void clickOnIB50(View v) {
-        clickOnIB(5,0);
-    }
 
-    //for image button at 3,0
-    public void clickOnIB30(View v) {
-        clickOnIB(3,0);
-    }
+    public void clickOnIB00(View v) {clickOnIB(0,0);}
+    public void clickOnIB01(View v) {clickOnIB(0,1);}
+    public void clickOnIB02(View v) {clickOnIB(0,2);}
+    public void clickOnIB03(View v) {clickOnIB(0,3);}
+    public void clickOnIB04(View v) {clickOnIB(0,4);}
+
+    public void clickOnIB10(View v) {clickOnIB(1,0);}
+    public void clickOnIB11(View v) {clickOnIB(1,1);}
+    public void clickOnIB12(View v) {clickOnIB(1,2);}
+    public void clickOnIB13(View v) {clickOnIB(1,3);}
+    public void clickOnIB14(View v) {clickOnIB(1,4);}
+
+    public void clickOnIB20(View v) {clickOnIB(2,0);}
+    public void clickOnIB21(View v) {clickOnIB(2,1);}
+    public void clickOnIB22(View v) {clickOnIB(2,2);}
+    public void clickOnIB23(View v) {clickOnIB(2,3);}
+    public void clickOnIB24(View v) {clickOnIB(2,4);}
+
+    public void clickOnIB30(View v) {clickOnIB(3,0);}
+    public void clickOnIB31(View v) {clickOnIB(3,1);}
+    public void clickOnIB32(View v) {clickOnIB(3,2);}
+    public void clickOnIB33(View v) {clickOnIB(3,3);}
+    public void clickOnIB34(View v) {clickOnIB(3,4);}
+
+    public void clickOnIB40(View v) {clickOnIB(4,0);}
+    public void clickOnIB41(View v) {clickOnIB(4,1);}
+    public void clickOnIB42(View v) {clickOnIB(4,2);}
+    public void clickOnIB43(View v) {clickOnIB(4,3);}
+    public void clickOnIB44(View v) {clickOnIB(4,4);}
+
+    public void clickOnIB50(View v) {clickOnIB(5,0);}
+    public void clickOnIB51(View v) {clickOnIB(5,1);}
+    public void clickOnIB52(View v) {clickOnIB(5,2);}
+    public void clickOnIB53(View v) {clickOnIB(5,3);}
+    public void clickOnIB54(View v) {clickOnIB(5,4);}
 
     public void clickOnIB(int row, int col) {
         if (g.gb.getTile(row,col).isBlank()) {
             if (hasTileSelected) {
                 g.gb.setMove(g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]),g.gb.getTile(row,col));
                 gameButtons[row][col].setBackgroundResource(getResources().
-                        getIdentifier("selectednum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
                 gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);
                 prevTileCoordinate[0]=-1;
                 prevTileCoordinate[1]=-1;
                 hasTileSelected=false;
             }
-        } else {
-            if (g.gb.getTile(row,col).isPlayerPiece()) {
-                if (hasTileSelected) {
+        } else { //its a game piece
+            if (g.gb.getTile(row,col).isPlayerPiece()) { //if its owned by you
+                if (hasTileSelected) { //we have already selected a tile
                     gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
                             getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
                     cleanBlankTile();
