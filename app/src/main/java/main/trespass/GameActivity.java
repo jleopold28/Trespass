@@ -188,6 +188,15 @@ public class GameActivity extends Activity implements NotifyInterface {
                 hasTileSelected=false;
             }
         } else { //its a game piece
+            if (prevTileCoordinate[0]==row && prevTileCoordinate[1]==col) {
+                gameButtons[row][col].setBackgroundResource(getResources().
+                        getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                prevTileCoordinate[0]=-1;
+                prevTileCoordinate[1]=-1;
+                hasTileSelected=false;
+                cleanBlankTile();
+                return;
+            }
             if (g.gb.getTile(row,col).isPlayerPiece()) { //if its owned by you
                 if (hasTileSelected) { //we have already selected a tile
 
