@@ -227,4 +227,19 @@ public class GameActivity extends Activity implements NotifyInterface {
             }
         }
     }
+    public void updateTiles(GameBoard gameBoard) {
+        for (int i=0; i<6; i++) {
+            for (int j=0; j<5; j++) {
+                if (gameBoard.getTile(i, j).isBlank()) {
+                    gameButtons[i][j].setBackgroundResource(R.drawable.blank);
+                } else if (gameBoard.getTile(i,j).isPlayerPiece()) {
+                    gameButtons[i][j].setBackgroundResource(getResources().
+                            getIdentifier("num" + Integer.toString(gameBoard.getTile(i, j).getNumber()), "drawable", this.getPackageName()));
+                } else {
+                    gameButtons[i][j].setBackgroundResource(getResources().
+                            getIdentifier("opponum" + Integer.toString(gameBoard.getTile(i, j).getNumber()), "drawable", this.getPackageName()));
+                }
+            }
+        }
+    }
 }
