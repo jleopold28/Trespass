@@ -173,7 +173,7 @@ public class GameDriver {
         //set up opponent numbers
         Log.d("test", opponentTiles);
 
-        gb.getTile(0,0).setNumber(Integer.parseInt(opponentTiles.substring(9,10)));
+        gb.getTile(0,0).setNumber(Integer.parseInt(opponentTiles.substring(9)));
         //gb.getTile(0,0).setNumber(4);
         gb.getTile(0,1).setNumber(Integer.parseInt(opponentTiles.substring(8,9)));
         gb.getTile(0,2).setNumber(Integer.parseInt(opponentTiles.substring(7,8)));

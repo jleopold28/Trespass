@@ -102,6 +102,8 @@ public class GameActivity extends Activity implements NotifyInterface{
         InitializationObject i = g.getInitializationObject();
         int[][] arr = i.getTiles();
 
+        g.setUpGameBoard();
+
         String num40 = "num" + arr[0][0];
         gameButtons[4][0].setBackgroundResource(getResources().getIdentifier(num40,"drawable",this.getPackageName()));
 
@@ -130,7 +132,7 @@ public class GameActivity extends Activity implements NotifyInterface{
         gameButtons[5][3].setBackgroundResource(getResources().getIdentifier(num53,"drawable",this.getPackageName()));
 
         String num54 = "num" + arr[1][4];
-        gameButtons[5][4].setBackgroundResource(getResources().getIdentifier(num54,"drawable",this.getPackageName()));
+        gameButtons[5][4].setBackgroundResource(getResources().getIdentifier(num54, "drawable", this.getPackageName()));
 
         //set up oppenent side
 
@@ -138,7 +140,7 @@ public class GameActivity extends Activity implements NotifyInterface{
         Log.d("test","number01 in " + g.gb.getTile(0,1).getNumber());
         Log.d("test","number02 in " + g.gb.getTile(0,2).getNumber());
         Log.d("test","number03 in " + g.gb.getTile(0,3).getNumber());
-        Log.d("test","number04 in " + g.gb.getTile(0,4).getNumber());
+        Log.d("test", "number04 in " + g.gb.getTile(0,4).getNumber());
 
         String num00 = "opponum" + g.gb.getTile(0,0).getNumber();
         gameButtons[0][0].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
@@ -170,7 +172,7 @@ public class GameActivity extends Activity implements NotifyInterface{
         String num14 = "opponum" + g.gb.getTile(1,4).getNumber();
         gameButtons[1][4].setBackgroundResource(getResources().getIdentifier(num14, "drawable", this.getPackageName()));
 
-        g.setUpGameBoard();
+        //g.setUpGameBoard();
         g.playGame();
     }
     public void notifyTileChanges(){
