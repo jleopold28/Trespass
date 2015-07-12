@@ -64,7 +64,7 @@ public class GameDriver {
         GameDriver.s = s;
 
         try {
-            mSocket = IO.socket("http://128.61.55.169:3000");
+            mSocket = IO.socket("http://haolidu.me:3000");
             Log.v("Created IO socket:" + mSocket.toString(), TAG);
             mSocket.on("dataError", onDataErrorListener);
             mSocket.on("Error", onErrorListener);
