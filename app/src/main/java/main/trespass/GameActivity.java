@@ -9,10 +9,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class GameActivity extends Activity implements NotifyInterface {
 
+    TextView oppoUsername = (TextView) this.findViewById(R.id.oppoUsername);
+    ImageView oppoAvatar = (ImageView) this.findViewById(R.id.oppoAvatarIV);
+    TextView playerUsername = (TextView) this.findViewById(R.id.playerUsername);
+    ImageView playerAvatar = (ImageView) this.findViewById(R.id.playerAvatarIV);
 
     public interface Notify{
         public void notifyTileChanges();
@@ -228,11 +234,11 @@ public class GameActivity extends Activity implements NotifyInterface {
         }
     }
     public void updateTiles(GameBoard gameBoard) {
-        for (int i=0; i<6; i++) {
-            for (int j=0; j<5; j++) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
                 if (gameBoard.getTile(i, j).isBlank()) {
                     gameButtons[i][j].setBackgroundResource(R.drawable.blank);
-                } else if (gameBoard.getTile(i,j).isPlayerPiece()) {
+                } else if (gameBoard.getTile(i, j).isPlayerPiece()) {
                     gameButtons[i][j].setBackgroundResource(getResources().
                             getIdentifier("num" + Integer.toString(gameBoard.getTile(i, j).getNumber()), "drawable", this.getPackageName()));
                 } else {
@@ -241,5 +247,14 @@ public class GameActivity extends Activity implements NotifyInterface {
                 }
             }
         }
+    }
+
+    private void setOppoInfo(String username, int avatar) {
+        oppoUsername.setText(username);
+        oppoAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
+    }
+    private void setPlayerInfo(String username, int avatar) {
+        playerUsername.setText(username);
+        playerAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
     }
 }
