@@ -91,7 +91,6 @@ public class GameDriver {
             o.put("device_id", getDeviceString());
         }
         catch(Exception e){
-
         }
         mSocket.emit("user_info", o);
     }
