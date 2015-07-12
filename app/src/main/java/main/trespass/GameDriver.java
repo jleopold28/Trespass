@@ -173,17 +173,17 @@ public class GameDriver {
         //set up opponent numbers
         Log.d("test", opponentTiles);
 
-        gb.getTile(0,0).setNumber(Integer.parseInt(opponentTiles.charAt(9) + ""));
-        gb.getTile(0,1).setNumber(Integer.parseInt(opponentTiles.charAt(8) + ""));
-        gb.getTile(0,2).setNumber(Integer.parseInt(opponentTiles.charAt(7) + ""));
-        gb.getTile(0,3).setNumber(Integer.parseInt(opponentTiles.charAt(6) + ""));
-        gb.getTile(0,4).setNumber(Integer.parseInt(opponentTiles.charAt(5) + ""));
+        gb.getTile(0,0).setNumber(Integer.parseInt(opponentTiles.substring(9,10)));
+        gb.getTile(0,1).setNumber(Integer.parseInt(opponentTiles.substring(8,9)));
+        gb.getTile(0,2).setNumber(Integer.parseInt(opponentTiles.substring(7,8)));
+        gb.getTile(0,3).setNumber(Integer.parseInt(opponentTiles.substring(6,7)));
+        gb.getTile(0,4).setNumber(Integer.parseInt(opponentTiles.substring(5,6)));
 
-        gb.getTile(1,0).setNumber(Integer.parseInt(opponentTiles.charAt(4) + ""));
-        gb.getTile(1,1).setNumber(Integer.parseInt(opponentTiles.charAt(3) + ""));
-        gb.getTile(1,2).setNumber(Integer.parseInt(opponentTiles.charAt(2) + ""));
-        gb.getTile(1,3).setNumber(Integer.parseInt(opponentTiles.charAt(1) + ""));
-        gb.getTile(1,4).setNumber(Integer.parseInt(opponentTiles.charAt(0) + ""));
+        gb.getTile(1,0).setNumber(Integer.parseInt(opponentTiles.substring(4,5)));
+        gb.getTile(1,1).setNumber(Integer.parseInt(opponentTiles.substring(3,4)));
+        gb.getTile(1,2).setNumber(Integer.parseInt(opponentTiles.substring(2,3)));
+        gb.getTile(1,3).setNumber(Integer.parseInt(opponentTiles.substring(1,2)));
+        gb.getTile(1,4).setNumber(Integer.parseInt(opponentTiles.substring(0,1)));
     }
     public static void playGame(){
         //while( gb.checkForWin() == 0){
