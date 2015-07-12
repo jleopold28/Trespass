@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tableLayout">
 
         <TableRow
             android:layout_width="match_parent"
@@ -255,6 +256,56 @@
                 android:background="@drawable/blank"
                 android:onClick="clickOnIB54" />
         </TableRow>
+
     </TableLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/oppoAvatarIV"
+        android:src="@drawable/selectedavatar1"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Username"
+        android:id="@+id/oppoUsername"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_alignTop="@+id/oppoAvatarIV"
+        android:layout_toLeftOf="@+id/oppoAvatarIV"
+        android:layout_alignBottom="@+id/oppoAvatarIV"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="40dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playerAvatarIV"
+        android:src="@drawable/selectedavatar1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Username"
+        android:id="@+id/playerUsername"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:layout_alignTop="@+id/playerAvatarIV"
+        android:layout_alignRight="@+id/oppoAvatarIV"
+        android:layout_alignEnd="@+id/oppoAvatarIV"
+        android:layout_toRightOf="@+id/playerAvatarIV"
+        android:layout_toEndOf="@+id/playerAvatarIV"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
