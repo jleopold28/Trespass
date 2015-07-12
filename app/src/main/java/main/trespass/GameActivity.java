@@ -134,34 +134,34 @@ public class GameActivity extends Activity implements NotifyInterface {
 
         //set up oppenent side
 
-        String num00 = "oppnum" + g.gb.getTile(0,0);
+        String num00 = "oppnum" + g.gb.getTile(0,0).getNumber();
         gameButtons[0][0].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num01 = "oppnum" + g.gb.getTile(0,1);
+        String num01 = "oppnum" + g.gb.getTile(0,1).getNumber();
         gameButtons[0][1].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num02 = "oppnum" + g.gb.getTile(0,2);
+        String num02 = "oppnum" + g.gb.getTile(0,2).getNumber();
         gameButtons[0][2].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num03 = "oppnum" + g.gb.getTile(0,3);
+        String num03 = "oppnum" + g.gb.getTile(0,3).getNumber();
         gameButtons[0][3].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num04 = "oppnum" + g.gb.getTile(0,4);
+        String num04 = "oppnum" + g.gb.getTile(0,4).getNumber();
         gameButtons[0][4].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num10 = "oppnum" + g.gb.getTile(1,0);
+        String num10 = "oppnum" + g.gb.getTile(1,0).getNumber();
         gameButtons[1][0].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num11 = "oppnum" + g.gb.getTile(1,1);
+        String num11 = "oppnum" + g.gb.getTile(1,1).getNumber();
         gameButtons[1][1].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num12 = "oppnum" + g.gb.getTile(1,2);
+        String num12 = "oppnum" + g.gb.getTile(1,2).getNumber();
         gameButtons[1][2].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num13 = "oppnum" + g.gb.getTile(1,3);
+        String num13 = "oppnum" + g.gb.getTile(1,3).getNumber();
         gameButtons[1][3].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
-        String num14 = "oppnum" + g.gb.getTile(1,4);
+        String num14 = "oppnum" + g.gb.getTile(1,4).getNumber();
         gameButtons[1][4].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
         g.setUpGameBoard();
