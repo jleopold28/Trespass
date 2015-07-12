@@ -629,8 +629,19 @@ waiting_room.on('connection', function (socket) {
 				},
 				//Check win status
 				function (game_row, socket_id, callback) {
-
-					if (false) {
+					var win = false;
+					if (to_position.row === 0) {
+						if (game_row.entity === game_row.player_1) {
+							if (game_piece === game_row.player_1_secret) {
+								win = true;
+							}
+						} else {
+							if (game_piece === game_row.player_2_secret) {
+								win = true;
+							}
+						}
+					}
+					if (win) {
 						console.log('Win status achieved for game: ' + game_row.game);
 						pg.connect(connectionString, function (err, client, done) {
 

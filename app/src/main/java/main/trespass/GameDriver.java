@@ -6,13 +6,22 @@ import android.util.Log;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.json.JSONObject;
+
 import java.net.URISyntaxException;
 
 /**
  * Created by jleopold on 6/23/2015.
  */
 public class GameDriver {
-
+    public interface socketEventInterface{
+        void onDataError(String s);
+        void onError(String s);
+        void onInfo(String s);
+        void onGame(int i);
+        void onMove(JSONObject json);
+        void onEnd(String s);
+    }
     private static GameDriver g;
     static Player p;
     static InitializationObject init;
