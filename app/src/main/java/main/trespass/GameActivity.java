@@ -15,10 +15,10 @@ import android.widget.TextView;
 
 public class GameActivity extends Activity implements NotifyInterface {
 
-    TextView oppoUsername = (TextView) this.findViewById(R.id.oppoUsername);
-    ImageView oppoAvatar = (ImageView) this.findViewById(R.id.oppoAvatarIV);
-    TextView playerUsername = (TextView) this.findViewById(R.id.playerUsername);
-    ImageView playerAvatar = (ImageView) this.findViewById(R.id.playerAvatarIV);
+    //TextView oppoUsername = (TextView) this.findViewById(R.id.oppoUsername);
+    //ImageView oppoAvatar = (ImageView) this.findViewById(R.id.oppoAvatarIV);
+    //TextView playerUsername = (TextView) this.findViewById(R.id.playerUsername);
+    //ImageView playerAvatar = (ImageView) this.findViewById(R.id.playerAvatarIV);
 
     public interface Notify{
         public void notifyTileChanges();
@@ -248,7 +248,7 @@ public class GameActivity extends Activity implements NotifyInterface {
             }
         }
     }
-
+    /**
     private void setOppoInfo(String username, int avatar) {
         oppoUsername.setText(username);
         oppoAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
@@ -257,4 +257,5 @@ public class GameActivity extends Activity implements NotifyInterface {
         playerUsername.setText(username);
         playerAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
     }
+     **/
 }
