@@ -44,6 +44,8 @@ public class ConnectionActivity extends Activity implements GameDriver.socketEve
         //find the opponent
         g = GameDriver.getInstance();
         InitializationObject i = g.getInitializationObject();
+        g.connectSocket((GameDriver.socketEventInterface)this);
+
         JSONObject json = i.getJSONObject();
         g.sendUserInfo(json);
         //startActivity(new Intent(ConnectionActivity.this, GameActivity.class));

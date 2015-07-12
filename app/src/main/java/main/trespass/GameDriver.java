@@ -34,6 +34,8 @@ public class GameDriver {
     private static Socket mSocket;
     private static String TAG = GameDriver.class.getCanonicalName();
     private static int gameID;
+    private static socketEventInterface s;
+
 
     public static GameDriver getInstance(){
         if (g == null){
@@ -57,10 +59,11 @@ public class GameDriver {
         return init;
     }
 
-    public static boolean connectSocket(){
+    public static boolean connectSocket(socketEventInterface s){
+        GameDriver.s = s;
 
         try {
-            mSocket = IO.socket("http://128.61.55.16:3000/trespass");
+            mSocket = IO.socket("http://128.61.55.169:3000");
             Log.v("Created IO socket:" + mSocket.toString(), TAG);
             mSocket.on("dataError", onDataErrorListener);
             mSocket.on("Error", onErrorListener);
@@ -75,6 +78,7 @@ public class GameDriver {
         } catch (URISyntaxException e) {
             return false;
         }
+        Log.v("Connected",TAG);
         return true;
     }
 
@@ -118,13 +122,14 @@ public class GameDriver {
     private static Emitter.Listener onGameListener = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            return;
+            Log.d("test", "onGameListener was called");
+            s.onGame();
         }
     };
     private static Emitter.Listener onMoveListener = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            return;
+
         }
     };
     private static Emitter.Listener onEndListener = new Emitter.Listener() {
