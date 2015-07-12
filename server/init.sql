@@ -14,10 +14,11 @@ create table tb_game
 (
 	game integer primary key default nextval('sq_pk_game'),
 	player_1 integer not null references tb_entity,
-	player_1_secret integer not null,
+	player_1_secret integer,
 	player_2 integer not null references tb_entity,
-	player_2_secret integer not null,
-	started timestamp not null default now(),
+	player_2_secret integer,
+	created timestamp not null default now(),
+	started timestamp,
 	finished timestamp,
 	aborted timestamp,
 	winner integer references tb_entity
@@ -44,3 +45,4 @@ create table tb_player_move
 	game_piece integer check ( game_piece >= 0 and game_piece <= 9 ),
 	moved timestamp not null default now()
 );
+create index on tb_player_move ( game, moved );

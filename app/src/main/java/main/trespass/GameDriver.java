@@ -1,6 +1,13 @@
 package main.trespass;
 
 
+import android.util.Log;
+
+import com.github.nkzawa.socketio.client.IO;
+import com.github.nkzawa.socketio.client.Socket;
+
+import java.net.URISyntaxException;
+
 /**
  * Created by jleopold on 6/23/2015.
  */
@@ -11,6 +18,8 @@ public class GameDriver {
     static InitializationObject init;
     private static NotifyInterface n;
     static GameBoard gb = new GameBoard();
+    private static Socket mSocket;
+    private static String TAG = GameDriver.class.getCanonicalName();
 
     public static GameDriver getInstance(){
         if (g == null){
@@ -34,6 +43,16 @@ public class GameDriver {
         return init;
     }
 
+    public static boolean connectSocket(){
+
+        try {
+            mSocket = IO.socket("http://128.61.55.16:3000/trespass");
+            Log.v("Created IO socket:" + mSocket.toString(), TAG);
+        } catch (URISyntaxException e) {
+            return false;
+        }
+        return true;
+    }
     public static void setListener(NotifyInterface n){
         GameDriver.n = n;
     }

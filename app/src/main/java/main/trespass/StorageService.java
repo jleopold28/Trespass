@@ -24,11 +24,7 @@ public class StorageService {
      *
      */
     protected StorageService(Context c){
-        try {
-            mSocket = IO.socket("http://chat.socket.io");
-            Log.v("Created IO socket:" + mSocket.toString(), TAG);
-        } catch (URISyntaxException e) {
-        }
+
     }
 
     protected boolean storeInitialGame(InitializationObject gI, Player p){
@@ -63,4 +59,5 @@ public class StorageService {
 
         return deviceId;
     }
+    //Create a json object with
 }

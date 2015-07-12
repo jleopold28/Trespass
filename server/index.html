@@ -22,7 +22,7 @@
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
-      var socket = io('/find_match');
+      var socket = io('/trespass');
       $('form').submit(function(){
         socket.emit('user_info', $('#m').val());
         $('#m').val('');
@@ -30,8 +30,25 @@
       });
       socket.on('dataError', function(msg){
         console.log(msg);
-        $('#messages').append($('<li>').text(msg));
+        $('#messages').append($('<li>').text( 'Data error: ' + msg));
       });
+      socket.on('Error', function(msg){
+        console.log(msg);
+        $('#messages').append($('<li>').text( 'Error: ' + msg));
+      });
+      socket.on('Info', function(msg){
+        console.log(msg);
+        $('#messages').append($('<li>').text( 'Info: ' + msg));
+      });
+      socket.on('Game', function(msg){
+        console.log(msg);
+        $('#messages').append($('<li>').text('Game: ' + msg));
+      });
+      socket.on('Move', function(msg){
+        console.log(msg);
+        $('#messages').append($('<li>').text('Move: ' + msg));
+      });
+
     </script>
   </body>
 </html>
