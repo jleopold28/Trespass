@@ -6,6 +6,8 @@ import android.util.Log;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
+import org.json.JSONObject;
+
 import java.net.URISyntaxException;
 
 /**
@@ -53,6 +55,11 @@ public class GameDriver {
         }
         return true;
     }
+
+    public static void sendToSocket(JSONObject o){
+        mSocket.emit("user_info",o);
+    }
+
     public static void setListener(NotifyInterface n){
         GameDriver.n = n;
     }
@@ -63,7 +70,6 @@ public class GameDriver {
         int[][] arr = init.getTiles();
         gb.getTile(4,0).setNumber(arr[0][0]);
         gb.getTile(4,0).setIsPlayerPiece(true);
-        //gb.getTile(4,0).setCoordinates(4,0);
         gb.getTile(4,1).setNumber(arr[0][1]);
         gb.getTile(4,1).setIsPlayerPiece(true);
         gb.getTile(4,2).setNumber(arr[0][2]);
@@ -85,6 +91,10 @@ public class GameDriver {
         gb.getTile(5,4).setIsPlayerPiece(true);
 
         //set up opponent numbers
+        //getjoson object
+        //decode
+
+
         //gb.getTile(0,0).setNumber();
         //gb.getTile(0,1).setNumber();
         //gb.getTile(0,2).setNumber();

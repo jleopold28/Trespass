@@ -7,9 +7,11 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.json.JSONObject;
+
 
 public class ConnectionActivity extends Activity {
-
+    GameDriver g;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +42,13 @@ public class ConnectionActivity extends Activity {
     }
     public void findOpponent(){
         //find the opponent
+
+        g = GameDriver.getInstance();
+        InitializationObject i = g.getInitializationObject();
+        JSONObject json = i.getJSONObject();
+        g.sendToSocket(json);
+
+        
 
         startActivity(new Intent(ConnectionActivity.this, GameActivity.class));
 
