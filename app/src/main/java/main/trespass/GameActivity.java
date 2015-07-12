@@ -133,8 +133,36 @@ public class GameActivity extends Activity implements NotifyInterface {
         gameButtons[5][4].setBackgroundResource(getResources().getIdentifier(num54,"drawable",this.getPackageName()));
 
         //set up oppenent side
-        //String num00 = "oppnum" + ??
-        //gameButtons[0][0].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num00 = "oppnum" + g.gb.getTile(0,0);
+        gameButtons[0][0].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num01 = "oppnum" + g.gb.getTile(0,1);
+        gameButtons[0][1].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num02 = "oppnum" + g.gb.getTile(0,2);
+        gameButtons[0][2].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num03 = "oppnum" + g.gb.getTile(0,3);
+        gameButtons[0][3].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num04 = "oppnum" + g.gb.getTile(0,4);
+        gameButtons[0][4].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num10 = "oppnum" + g.gb.getTile(1,0);
+        gameButtons[1][0].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num11 = "oppnum" + g.gb.getTile(1,1);
+        gameButtons[1][1].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num12 = "oppnum" + g.gb.getTile(1,2);
+        gameButtons[1][2].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num13 = "oppnum" + g.gb.getTile(1,3);
+        gameButtons[1][3].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+
+        String num14 = "oppnum" + g.gb.getTile(1,4);
+        gameButtons[1][4].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
 
         g.setUpGameBoard();
         g.playGame();

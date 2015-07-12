@@ -35,6 +35,7 @@ public class GameDriver {
     private static String TAG = GameDriver.class.getCanonicalName();
     private static int gameID;
     private static socketEventInterface s;
+    private static String opponentTiles;
 
 
     public static GameDriver getInstance(){
@@ -115,6 +116,7 @@ public class GameDriver {
     private static Emitter.Listener onUserInfoListener = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
+            opponentTiles = (String) args[0];
             return;
         }
     };
@@ -168,21 +170,17 @@ public class GameDriver {
         gb.getTile(5,4).setIsPlayerPiece(true);
 
         //set up opponent numbers
-        //getjoson object
-        //decode
+        gb.getTile(0,0).setNumber(opponentTiles.charAt(9));
+        gb.getTile(0,1).setNumber(opponentTiles.charAt(8));
+        gb.getTile(0,2).setNumber(opponentTiles.charAt(7));
+        gb.getTile(0,3).setNumber(opponentTiles.charAt(6));
+        gb.getTile(0,4).setNumber(opponentTiles.charAt(5));
 
-
-        //gb.getTile(0,0).setNumber();
-        //gb.getTile(0,1).setNumber();
-        //gb.getTile(0,2).setNumber();
-        //gb.getTile(0,3).setNumber();
-        //gb.getTile(0,4).setNumber();
-
-        //gb.getTile(1,0).setNumber();
-        //gb.getTile(1,1).setNumber();
-        //gb.getTile(1,2).setNumber();
-        //gb.getTile(1,3).setNumber(tiles.subString(1));
-        //gb.getTile(1,4).setNumber(tiles.substring(0));
+        gb.getTile(1,0).setNumber(opponentTiles.charAt(4));
+        gb.getTile(1,1).setNumber(opponentTiles.charAt(3));
+        gb.getTile(1,2).setNumber(opponentTiles.charAt(2));
+        gb.getTile(1,3).setNumber(opponentTiles.charAt(1));
+        gb.getTile(1,4).setNumber(opponentTiles.charAt(0));
     }
     public static void playGame(){
         //while( gb.checkForWin() == 0){
