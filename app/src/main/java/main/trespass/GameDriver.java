@@ -1,6 +1,8 @@
 package main.trespass;
 
 
+import android.content.Context;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.github.nkzawa.socketio.client.IO;
@@ -9,6 +11,7 @@ import com.github.nkzawa.socketio.client.Socket;
 import org.json.JSONObject;
 
 import java.net.URISyntaxException;
+import java.util.UUID;
 
 /**
  * Created by jleopold on 6/23/2015.
@@ -56,8 +59,18 @@ public class GameDriver {
         return true;
     }
 
-    public static void sendToSocket(JSONObject o){
-        mSocket.emit("user_info",o);
+    protected static String getDeviceString(){
+        return UUID.randomUUID().toString();
+    }
+
+    public static void sendUserInfo(JSONObject o){
+        try{
+            o.put("device_id", getDeviceString());
+        }
+        catch(Exception e){
+
+        }
+        mSocket.emit("user_info", o);
     }
 
     public static void setListener(NotifyInterface n){

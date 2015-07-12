@@ -46,9 +46,9 @@ public class ConnectionActivity extends Activity {
         g = GameDriver.getInstance();
         InitializationObject i = g.getInitializationObject();
         JSONObject json = i.getJSONObject();
-        g.sendToSocket(json);
+        g.sendUserInfo(json);
 
-        
+
 
         startActivity(new Intent(ConnectionActivity.this, GameActivity.class));
 
