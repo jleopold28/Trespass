@@ -5,6 +5,7 @@ import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
@@ -60,6 +61,16 @@ public class GameDriver {
         try {
             mSocket = IO.socket("http://128.61.55.16:3000/trespass");
             Log.v("Created IO socket:" + mSocket.toString(), TAG);
+            mSocket.on("dataError", onDataErrorListener);
+            mSocket.on("Error", onErrorListener);
+            mSocket.on("Info", onInfoListener);
+            mSocket.on("userInfo", onUserInfoListener);
+            mSocket.on("Game", onGameListener);
+            mSocket.on("Move", onMoveListener);
+            mSocket.on("End", onEndListener);
+
+            mSocket.connect();
+
         } catch (URISyntaxException e) {
             return false;
         }
@@ -79,7 +90,48 @@ public class GameDriver {
         }
         mSocket.emit("user_info", o);
     }
-
+    private static Emitter.Listener onDataErrorListener = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            return;
+        }
+    };
+    private static Emitter.Listener onErrorListener = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            return;
+        }
+    };
+    private static Emitter.Listener onInfoListener= new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            return;
+        }
+    };
+    private static Emitter.Listener onUserInfoListener = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            return;
+        }
+    };
+    private static Emitter.Listener onGameListener = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            return;
+        }
+    };
+    private static Emitter.Listener onMoveListener = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            return;
+        }
+    };
+    private static Emitter.Listener onEndListener = new Emitter.Listener() {
+        @Override
+        public void call(final Object... args) {
+            return;
+        }
+    };
     public static void setListener(NotifyInterface n){
         GameDriver.n = n;
     }
@@ -124,8 +176,8 @@ public class GameDriver {
         //gb.getTile(1,0).setNumber();
         //gb.getTile(1,1).setNumber();
         //gb.getTile(1,2).setNumber();
-        //gb.getTile(1,3).setNumber();
-        //gb.getTile(1,4).setNumber();
+        //gb.getTile(1,3).setNumber(tiles.subString(1));
+        //gb.getTile(1,4).setNumber(tiles.substring(0));
     }
     public static void playGame(){
         //while( gb.checkForWin() == 0){
