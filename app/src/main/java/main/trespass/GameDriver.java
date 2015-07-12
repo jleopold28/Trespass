@@ -22,7 +22,7 @@ public class GameDriver {
         void onDataError(String s);
         void onError(String s);
         void onInfo(String s);
-        void onGame(int i);
+        void onGame();
         void onMove(JSONObject json);
         void onEnd(String s);
     }
@@ -33,6 +33,7 @@ public class GameDriver {
     static GameBoard gb = new GameBoard();
     private static Socket mSocket;
     private static String TAG = GameDriver.class.getCanonicalName();
+    private static int gameID;
 
     public static GameDriver getInstance(){
         if (g == null){

@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import org.json.JSONObject;
 
 
-public class ConnectionActivity extends Activity {
+public class ConnectionActivity extends Activity implements GameDriver.socketEventInterface{
     GameDriver g;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +42,32 @@ public class ConnectionActivity extends Activity {
     }
     public void findOpponent(){
         //find the opponent
-
         g = GameDriver.getInstance();
         InitializationObject i = g.getInitializationObject();
         JSONObject json = i.getJSONObject();
         g.sendUserInfo(json);
+        //startActivity(new Intent(ConnectionActivity.this, GameActivity.class));
 
+    }
 
+    public void onDataError(String s){
 
+    }
+    public void onError(String s){
+
+    }
+    public void onInfo(String s){
+        //will tell you if there are no online players
+        //display string in text view
+    }
+    public void onGame(){
+        // go to the next activity
         startActivity(new Intent(ConnectionActivity.this, GameActivity.class));
+    }
+    public void onMove(JSONObject json){
+
+    }
+    public void onEnd(String s){
 
     }
 }
