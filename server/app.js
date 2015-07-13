@@ -12,6 +12,7 @@ Emit events:
 	dataError: error inputs
 	Error: connection/database error
 	Info: information.
+	userInfo: user tile arrangment
 	Game: start game indication
 	Move: the other player's move, also indicates your turn.
 	End: Game ends, either you win/lose.
@@ -23,13 +24,19 @@ var express = require('express');
 var router = express.Router();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var waiting_room = io.of('/trespass');
+var waiting_room = io.of('/');
 waiting_room.on('connection', function (socket) {
 	console.log('A user has connected.');
-	socket.on('user_info', function (device_id) {
+	socket.on('user_info', function (user_info) {
+		var device_id = user_info.device_id;
+		var tiles = user_info.tiles;
 		if (!device_id) {
 			console.log('User with id ' + socket.id + ' sent an invalid device_id');
 			return socket.emit('dataError', 'Device id is required.');
+		}
+		if (!tiles) {
+			console.log('User with id ' + socket.id + ' sent an invalid device_id');
+			return socket.emit('dataError', 'Tile arrangment is required.');
 		}
 		console.log('a user ' + device_id + ' is finding a match for game.');
 
@@ -124,8 +131,8 @@ waiting_room.on('connection', function (socket) {
 						}
 						var insert_waiting_list = function () {
 							console.log('Inserting user: ' + entity + ' into waiting list.');
-							client.query("insert into tb_waiting_list (player) \
-									values( $1 ) returning waiting_list", [entity],
+							client.query("insert into tb_waiting_list (player, tiles) \
+									values( $1, $2) returning waiting_list", [entity, tiles],
 								function (err, result) {
 									done();
 
@@ -186,7 +193,7 @@ waiting_room.on('connection', function (socket) {
 					});
 				},
 				function (waiting_list, client, callback) {
-					client.query(' select * from tb_waiting_list \
+					client.query('select * from tb_waiting_list \
 						           where filled is null \
 						             and invalidated is null \
 						             and waiting_list != $1', [waiting_list],
@@ -238,7 +245,7 @@ waiting_room.on('connection', function (socket) {
 												client.end();
 												return callback(err);
 											}
-											return callback(null, waiting_list, wait_list_row.waiting_list, socket_id, client);
+											return callback(null, waiting_list, wait_list_row, socket_id, client);
 										});
 									} else {
 										console.log("The other player's socket id: " + socket_id + ' is invalid. Remove wait list entry.');
@@ -274,43 +281,45 @@ waiting_room.on('connection', function (socket) {
 					});
 				},
 				//End transcation
-				function (waiting_list, waiting_list2, socket_id, client, callback) {
+				function (waiting_list, waiting_list_row, socket_id, client, callback) {
 					client.query("commit", function (err, result) {
 						client.end();
 						if (err) {
 							return callback(err);
 						}
-						callback(null, waiting_list, waiting_list2, socket_id);
+						callback(null, waiting_list, waiting_list_row, socket_id);
 					});
 				},
 				//Make a new game.
-				function (waiting_list, waiting_list2, socket_id, callback) {
+				function (waiting_list, waiting_list_row, socket_id, callback) {
 					pg.connect(connectionString, function (err, client, done) {
 
 						if (err) {
 							socket.emit('Error', 'Could not connect to database.');
 							return console.error('Could not connect to database.', err);
 						}
-						client.query('insert into tb_game( player_1, player_2 ) \
-										( select wl.player, wl2.player \
+						client.query('insert into tb_game( player_1, player_2, player_1_tiles, player_2_tiles ) \
+										( select wl.player, wl2.player, $1, $2 \
 											from tb_waiting_list wl,\
 											     tb_waiting_list wl2 \
-										   where wl.waiting_list = $1 \
-											 and wl2.waiting_list = $2 \
-											) returning game ', [waiting_list, waiting_list2], function (err, result) {
+										   where wl.waiting_list = $3 \
+											 and wl2.waiting_list = $4 \
+											) returning game ', [tiles, waiting_list_row.tiles, waiting_list, waiting_list_row.waiting_list], function (err, result) {
 							if (err) {
 								return callback(err);
 							}
 							var row = result.rows[0];
-							callback(null, row, socket_id);
+							callback(null, row, socket_id, waiting_list_row.tiles);
 						});
 					});
 				},
 				//Tell players the game PK that they are in.
-				function (game_row, socket_id, callback) {
+				function (game_row, socket_id, player2_tiles, callback) {
 					if (io.sockets.connected[socket_id]) {
 						console.log('Starting game id: ' + game_row.game);
+						socket.emit('userInfo', player2_tiles);
 						socket.emit('Game', game_row.game);
+						socket.broadcast.to(socket_id).emit('userInfo', tiles);
 						socket.broadcast.to(socket_id).emit('Game', game_row.game);
 					} else {
 						console.log('Player with socket id: ' + socket_id + ' has dropped connection.');

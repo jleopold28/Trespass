@@ -15,8 +15,10 @@ create table tb_game
 	game integer primary key default nextval('sq_pk_game'),
 	player_1 integer not null references tb_entity,
 	player_1_secret integer,
+	player_1_tiles varchar,
 	player_2 integer not null references tb_entity,
 	player_2_secret integer,
+	player_2_tiles varchar,
 	created timestamp not null default now(),
 	started timestamp,
 	finished timestamp,
@@ -29,6 +31,7 @@ create table tb_waiting_list
 (
 	waiting_list integer primary key default nextval('sq_pk_waiting_list'),
 	player integer not null references tb_entity,
+	tiles varchar,
 	requested timestamp not null default now(),
 	filled timestamp,
 	invalidated timestamp
