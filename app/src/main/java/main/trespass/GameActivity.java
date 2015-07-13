@@ -1,6 +1,9 @@
 package main.trespass;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,10 +18,10 @@ import android.widget.TextView;
 
 public class GameActivity extends Activity implements NotifyInterface{
 
-    //TextView oppoUsername = (TextView) this.findViewById(R.id.oppoUsername);
-    //ImageView oppoAvatar = (ImageView) this.findViewById(R.id.oppoAvatarIV);
-    //TextView playerUsername = (TextView) this.findViewById(R.id.playerUsername);
-    //ImageView playerAvatar = (ImageView) this.findViewById(R.id.playerAvatarIV);
+    TextView oppoUsername;
+    ImageView oppoAvatar;
+    TextView playerUsername;
+    ImageView playerAvatar;
 
     public interface Notify{
         public void notifyTileChanges();
@@ -34,6 +37,12 @@ public class GameActivity extends Activity implements NotifyInterface{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         Log.d("t", "test");
+
+        oppoUsername = (TextView) this.findViewById(R.id.oppoUsername);
+        oppoAvatar = (ImageView) this.findViewById(R.id.oppoAvatarIV);
+        playerUsername = (TextView) this.findViewById(R.id.playerUsername);
+        playerAvatar = (ImageView) this.findViewById(R.id.playerAvatarIV);
+
 
         gameButtons = new ImageButton[6][5];
 
@@ -135,7 +144,6 @@ public class GameActivity extends Activity implements NotifyInterface{
         gameButtons[5][4].setBackgroundResource(getResources().getIdentifier(num54, "drawable", this.getPackageName()));
 
         //set up oppenent side
-
         Log.d("test","number00 in " + g.gb.getTile(0,0).getNumber());
         Log.d("test","number01 in " + g.gb.getTile(0,1).getNumber());
         Log.d("test","number02 in " + g.gb.getTile(0,2).getNumber());
@@ -284,7 +292,7 @@ public class GameActivity extends Activity implements NotifyInterface{
             }
         }
     }
-    /**
+
     private void setOppoInfo(String username, int avatar) {
         oppoUsername.setText(username);
         oppoAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
@@ -293,5 +301,24 @@ public class GameActivity extends Activity implements NotifyInterface{
         playerUsername.setText(username);
         playerAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
     }
-     **/
+    public void endGameDialog(boolean ifWin) {
+        String message;
+        if (ifWin) {message = "Grats! You Win!";} else {message = "You Lose!";}
+        AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
+            builder.setTitle("Game Over");
+            builder.setMessage(message);
+            builder.setPositiveButton("Again", new DialogInterface.OnClickListener() { // click on Again, back to ConnectionActivity looking for another game
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(GameActivity.this,ConnectionActivity.class));
+                }
+            });
+            builder.setNegativeButton("Main Menu", new DialogInterface.OnClickListener() { // click on Main Menu, back to the MainActivity
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(GameActivity.this,MainActivity.class));
+                }
+            });
+        builder.show();
+    }
 }
