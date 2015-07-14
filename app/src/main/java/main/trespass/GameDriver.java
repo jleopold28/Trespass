@@ -25,7 +25,6 @@ public class GameDriver {
     static InitializationObject init;
     static GameBoard gb = new GameBoard();
     private static GameDriver g;
-    private static NotifyInterface n;
     private static Socket mSocket;
     private static String TAG = GameDriver.class.getCanonicalName();
     private static int gameID;
@@ -255,7 +254,7 @@ public class GameDriver {
         gb.getTile(1, 4).setNumber(Integer.parseInt(opponentTiles.substring(0, 1)));
     }
 
-    public static void playGame() {
+    public static void playGame(TileChangeNotifier t) {
         //while( gb.checkForWin() == 0){
 
         //who goes first?
@@ -269,15 +268,7 @@ public class GameDriver {
         //while no win condition
 
         //n.notifyTileChanges();
-        //}
-        if (gb.checkForWin() == 1) {
-
-            //player 1 wins -> splash screen
-        }
-        if (gb.checkForWin() == 2) {
-
-            //player 2 wins -> splash screen
-        }
+        new Thread(new GameThread()).start();
     }
 
     public interface SocketEventInterface {
@@ -293,5 +284,4 @@ public class GameDriver {
 
         void onEnd(String s);
     }
-
 }

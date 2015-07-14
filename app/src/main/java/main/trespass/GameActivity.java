@@ -2,6 +2,7 @@ package main.trespass;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -14,29 +15,80 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 
-public class GameActivity extends Activity implements NotifyInterface{
+public class GameActivity extends Activity implements GameDriver.SocketEventInterface, TileChangeNotifier {
 
     TextView oppoUsername;
     ImageView oppoAvatar;
     TextView playerUsername;
     ImageView playerAvatar;
-
-    public interface Notify{
-        public void notifyTileChanges();
-    }
-
     GameDriver g;
+    int[] prevTileCoordinate = new int[]{-1,-1};
+    boolean hasTileSelected = false;
     private ImageButton gameButtons[][];
     private boolean gameOver = false;
     private boolean pieceSelected = false;
 
     @Override
+    public void onDataError(String s) {}
+
+    @Override
+    public void onError(String s) {
+        new AlertDialog.Builder(this)
+                .setTitle("Error")
+                .setMessage(s)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+    @Override
+    public void onInfo(String s) {
+        new AlertDialog.Builder(this)
+                .setTitle("Wait...")
+                .setMessage(s)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .show();
+    }
+
+    @Override
+    public void onGame() {}
+
+    @Override
+    public void onMove(JSONObject json) {
+        if(json == null){
+            Toast.makeText(this, "Your turn", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, json.toString(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onEnd(String s) {
+        if(s.contains("Win")){
+            showEndGameDialog(true);
+        } else {
+            showEndGameDialog(false);
+        }
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        Log.d("t", "test");
 
         oppoUsername = (TextView) this.findViewById(R.id.oppoUsername);
         oppoAvatar = (ImageView) this.findViewById(R.id.oppoAvatarIV);
@@ -181,49 +233,67 @@ public class GameActivity extends Activity implements NotifyInterface{
         gameButtons[1][4].setBackgroundResource(getResources().getIdentifier(num14, "drawable", this.getPackageName()));
 
         //g.setUpGameBoard();
-        g.playGame();
+        g.playGame(this);
     }
-    public void notifyTileChanges(){
-
-    }
-
-    int[] prevTileCoordinate = new int[]{-1,-1};
-    boolean hasTileSelected = false;
 
     public void clickOnIB00(View v) {clickOnIB(0,0);}
+
     public void clickOnIB01(View v) {clickOnIB(0,1);}
+
     public void clickOnIB02(View v) {clickOnIB(0,2);}
+
     public void clickOnIB03(View v) {clickOnIB(0,3);}
+
     public void clickOnIB04(View v) {clickOnIB(0,4);}
 
     public void clickOnIB10(View v) {clickOnIB(1,0);}
+
     public void clickOnIB11(View v) {clickOnIB(1,1);}
+
     public void clickOnIB12(View v) {clickOnIB(1,2);}
+
     public void clickOnIB13(View v) {clickOnIB(1,3);}
+
     public void clickOnIB14(View v) {clickOnIB(1,4);}
 
     public void clickOnIB20(View v) {clickOnIB(2,0);}
+
     public void clickOnIB21(View v) {clickOnIB(2,1);}
+
     public void clickOnIB22(View v) {clickOnIB(2,2);}
+
     public void clickOnIB23(View v) {clickOnIB(2,3);}
+
     public void clickOnIB24(View v) {clickOnIB(2,4);}
 
     public void clickOnIB30(View v) {clickOnIB(3,0);}
+
     public void clickOnIB31(View v) {clickOnIB(3,1);}
+
     public void clickOnIB32(View v) {clickOnIB(3,2);}
+
     public void clickOnIB33(View v) {clickOnIB(3,3);}
+
     public void clickOnIB34(View v) {clickOnIB(3,4);}
 
     public void clickOnIB40(View v) {clickOnIB(4,0);}
+
     public void clickOnIB41(View v) {clickOnIB(4,1);}
+
     public void clickOnIB42(View v) {clickOnIB(4,2);}
+
     public void clickOnIB43(View v) {clickOnIB(4,3);}
+
     public void clickOnIB44(View v) {clickOnIB(4,4);}
 
     public void clickOnIB50(View v) {clickOnIB(5,0);}
+
     public void clickOnIB51(View v) {clickOnIB(5,1);}
+
     public void clickOnIB52(View v) {clickOnIB(5,2);}
+
     public void clickOnIB53(View v) {clickOnIB(5,3);}
+
     public void clickOnIB54(View v) {clickOnIB(5,4);}
 
     public void clickOnIB(int row, int col) {
@@ -268,6 +338,7 @@ public class GameActivity extends Activity implements NotifyInterface{
             }
         }
     }
+
     public void cleanBlankTile() {
         for (int i=0;i<6;i++){
             for (int j=0;j<5;j++) {
@@ -277,6 +348,7 @@ public class GameActivity extends Activity implements NotifyInterface{
             }
         }
     }
+
     public void updateTiles(GameBoard gameBoard) {
         for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 5; j++) {
@@ -297,11 +369,13 @@ public class GameActivity extends Activity implements NotifyInterface{
         oppoUsername.setText(username);
         oppoAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
     }
+
     private void setPlayerInfo(String username, int avatar) {
         playerUsername.setText(username);
         playerAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
     }
-    public void endGameDialog(boolean ifWin) {
+
+    public void showEndGameDialog(boolean ifWin) {
         String message;
         if (ifWin) {message = "Grats! You Win!";} else {message = "You Lose!";}
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
@@ -320,5 +394,10 @@ public class GameActivity extends Activity implements NotifyInterface{
                 }
             });
         builder.show();
+    }
+
+    @Override
+    public void tileChanged() {
+        updateTiles(g.gb);
     }
 }
