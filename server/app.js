@@ -699,14 +699,14 @@ waiting_room.on('connection', function (socket) {
 				pg.connect(connectionString, function (err, client, done) {
 					client.query("update tb_waiting_list set invalidated = now() \
 		where player = ( select entity from tb_entity where player_info ->> 'socket_id' = $1 )\
-		  and invalidated is null returning player", [socket.id],
+		  and and filled is null and invalidated is null returning player", [socket.id],
 						function (err, result) {
 							done();
 							if (err) {
 								return callback(err);
 							}
 							if (result.rowCount > 0) {
-								console.log('Waiting list entry for user ' + result.rows[0].player + ' deleted.');
+								console.log('Waiting list entry for user ' + result.rows[0].player + ' invalidated.');
 							} else {
 								console.log('No wait list entry for user with socket id: ' + socket.id);
 							}

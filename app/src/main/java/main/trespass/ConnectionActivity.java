@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import org.json.JSONObject;
 
 
-public class ConnectionActivity extends Activity implements GameDriver.socketEventInterface{
+public class ConnectionActivity extends Activity implements GameDriver.SocketEventInterface{
     GameDriver g;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,8 @@ public class ConnectionActivity extends Activity implements GameDriver.socketEve
         //find the opponent
         g = GameDriver.getInstance();
         InitializationObject i = g.getInitializationObject();
-        g.connectSocket((GameDriver.socketEventInterface)this);
+        g.setSocketListener(this);
+        g.connectSocket();
 
         JSONObject json = i.getJSONObject();
         g.sendUserInfo(json);
