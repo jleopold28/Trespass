@@ -3,6 +3,7 @@ package main.trespass;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -37,43 +38,59 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     public void onDataError(String s) {}
 
     @Override
-    public void onError(String s) {
-        new AlertDialog.Builder(this)
-                .setTitle("Error")
-                .setMessage(s)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
+    public void onError(final String s) {
+        final Context c = this;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(c)
+                        .setTitle("Error")
+                        .setMessage(s)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            }
+        });
+
     }
 
     @Override
-    public void onInfo(String s) {
-        new AlertDialog.Builder(this)
-                .setTitle("Wait...")
-                .setMessage(s)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_info)
-                .show();
+    public void onInfo(final String s) {
+        final Context c = this;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(c)
+                        .setTitle("Wait...")
+                        .setMessage(s)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .show();
+            }
+        });
+
     }
 
     @Override
     public void onGame() {}
 
     @Override
-    public void onMove(JSONObject json) {
-        if(json == null){
-            Toast.makeText(this, "Your turn", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, json.toString(), Toast.LENGTH_LONG).show();
-        }
+    public void onMove(final JSONObject json) {
+        final Context c = this;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(c, json.toString(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
@@ -134,6 +151,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         gameButtons[5][3] = (ImageButton) findViewById(R.id.IB53);
         gameButtons[5][4] = (ImageButton) findViewById(R.id.IB54);
         startNewGame();
+        GameDriver.setSocketListener(this);
     }
 
     @Override
