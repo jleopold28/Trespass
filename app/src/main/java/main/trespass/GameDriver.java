@@ -24,6 +24,7 @@ public class GameDriver {
     static Player p;
     static InitializationObject init;
     static GameBoard gb = new GameBoard();
+    static boolean isTurn = true; // true if it is the player's turn; false if it the opponent's turn
     private static GameDriver g;
     private static Socket mSocket;
     private static String TAG = GameDriver.class.getCanonicalName();
