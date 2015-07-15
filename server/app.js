@@ -1,6 +1,6 @@
 var app = require('express')();
 var http = require('http').Server(app);
-var pg = require('pg').native;
+var pg = require('pg');
 var waterfall = require('async-waterfall');
 var async = require('async');
 app.get('/', function (req, res) {
@@ -305,6 +305,7 @@ waiting_room.on('connection', function (socket) {
 										   where wl.waiting_list = $3 \
 											 and wl2.waiting_list = $4 \
 											) returning game ', [tiles, waiting_list_row.tiles, waiting_list, waiting_list_row.waiting_list], function (err, result) {
+							done();
 							if (err) {
 								return callback(err);
 							}
@@ -600,10 +601,11 @@ waiting_room.on('connection', function (socket) {
 						values($1, $2, $3, $4, $5)\
 						', [game_row.game, game_row.entity, from_position, to_position, game_piece],
 							function (err, result) {
+								done();
+
 								if (err) {
 									return callback(err);
 								}
-								done();
 								callback(null, game_row);
 							});
 					});
@@ -627,10 +629,10 @@ waiting_room.on('connection', function (socket) {
 						          where g.game = $1";
 						}
 						client.query(query, [game_row.game], function (err, result) {
+							done();
 							if (err) {
 								return callback(err);
 							}
-							done();
 							var socket_id = result.rows[0].socket_id;
 							callback(null, game_row, socket_id);
 						});
@@ -749,6 +751,7 @@ waiting_room.on('connection', function (socket) {
 				}
 				pg.connect(connectionString, function (err, client, done) {
 					client.query("update tb_game g set aborted = now() where game = $1", [game_row.game], function (err, result) {
+						done();
 						if (err) {
 							return callback(err);
 						}
@@ -775,6 +778,7 @@ waiting_room.on('connection', function (socket) {
 						          where g.game = $1";
 					}
 					client.query(query, [game_row.game], function (err, result) {
+						done();
 						if (err) {
 							return callback(err);
 						}
