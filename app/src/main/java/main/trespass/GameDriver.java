@@ -151,7 +151,7 @@ public class GameDriver {
         GameDriver.s = s;
     }
 
-    public static boolean connectSocket() {
+    public static void connectSocket() {
 
         try {
             mSocket = IO.socket("http://haolidu.me:3000/trespass");
@@ -165,12 +165,14 @@ public class GameDriver {
             mSocket.on("End", onEndListener);
 
             mSocket.connect();
-
         } catch (URISyntaxException e) {
-            return false;
         }
-        Log.v("Connected", TAG);
-        return true;
+    }
+
+    public static boolean isSocketConnected(){
+        if(mSocket != null)
+            return mSocket.connected();
+        return false;
     }
 
     protected static String getDeviceString() {

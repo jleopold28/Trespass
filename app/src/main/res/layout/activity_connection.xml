@@ -12,8 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Searching for an Opponent"
-        android:id="@+id/textView17"
+        android:id="@+id/connectionActivityString"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:text="Searching for an Opponent" />
 </RelativeLayout>
