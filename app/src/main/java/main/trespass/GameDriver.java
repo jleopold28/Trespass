@@ -181,8 +181,8 @@ public class GameDriver {
             return UUID.randomUUID().toString();
         }
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(c);
-        String deviceString = settings.getString("device_id", null);
-        if(deviceString == null){
+        String deviceString = settings.getString("device_id", "");
+        if(deviceString.length() == 0){
             final TelephonyManager tm = (TelephonyManager)c.getSystemService(Context.TELEPHONY_SERVICE);
 
             final String tmDevice, tmSerial, androidId;
@@ -206,6 +206,7 @@ public class GameDriver {
         try {
             o.put("device_id", getDeviceString());
         } catch (Exception e) {
+            Log.e(TAG, e.toString());
         }
         mSocket.emit("user_info", o);
     }
@@ -268,7 +269,6 @@ public class GameDriver {
         //while no win condition
 
         //n.notifyTileChanges();
-        new Thread(new GameThread()).start();
     }
 
     public interface SocketEventInterface {
