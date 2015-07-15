@@ -18,13 +18,13 @@ Emit events:
 	End: Game ends, either you win/lose.
 */
 //Socket.io
-var connectionString = 'pg://trespass:RW1@bEKaraLaWw!e@localhost/trespass';
+var connectionString = 'pg://trespass:RW1@bEKaraLaWw!e@10.0.1.126/trespass';
 
 var express = require('express');
 var router = express.Router();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var waiting_room = io.of('/');
+var waiting_room = io.of('/trespass');
 waiting_room.on('connection', function (socket) {
 	console.log('A user has connected.');
 	socket.on('user_info', function (user_info) {
@@ -699,7 +699,7 @@ waiting_room.on('connection', function (socket) {
 				pg.connect(connectionString, function (err, client, done) {
 					client.query("update tb_waiting_list set invalidated = now() \
 		where player = ( select entity from tb_entity where player_info ->> 'socket_id' = $1 )\
-		  and and filled is null and invalidated is null returning player", [socket.id],
+		  and filled is null and invalidated is null returning player", [socket.id],
 						function (err, result) {
 							done();
 							if (err) {
@@ -798,6 +798,6 @@ waiting_room.on('connection', function (socket) {
 });
 
 
-http.listen(3000, function () {
-	console.log('listening on port 3000');
+http.listen(3001, function () {
+	console.log('listening on port 3001');
 });
