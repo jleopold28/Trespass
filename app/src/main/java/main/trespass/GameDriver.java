@@ -32,6 +32,7 @@ public class GameDriver {
     private static String deviceString;
     private static SocketEventInterface s;
     private static String opponentTiles;
+    protected static boolean myTurn = false;
     private static Emitter.Listener onDataErrorListener = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -93,10 +94,13 @@ public class GameDriver {
         @Override
         public void call(final Object... args) {
             JSONObject json = null;
-            Log.d(TAG, args[0].toString());
 
             try {
-                json = new JSONObject((String)args[0]);
+                String jsonString = (String)args[0];
+                if(jsonString.length() == 0){
+                    myTurn = true;
+                }
+                json = new JSONObject(jsonString);
             } catch (ClassCastException e) {
                 Log.e(TAG, "Expecting json string in onMoveListener.");
                 return;

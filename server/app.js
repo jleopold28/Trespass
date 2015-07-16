@@ -580,7 +580,7 @@ waiting_room.on('connection', function (socket) {
 							if (result.rowCount > 0) {
 								if (result.rows[0].entity === game_row.entity) {
 									console.log('Not player ' + game_row.entity + "'s turn in game: " + game_row.game);
-									return socket.emit('dataError', 'Not your turn.');
+									return socket.emit('Info', 'Not your turn.');
 								}
 							}
 							callback(null, game_row);
