@@ -499,7 +499,12 @@ waiting_room.on('connection', function (socket) {
 	});
 
 	//from_position: {'row': 0, 'column': 0 }
-	socket.on('new_move', function (game, device_id, from_position, to_position, game_piece) {
+	socket.on('new_move', function (input) {
+		var game = input.game;
+		var device_id = input.device_id;
+		var from_position = input.from_position;
+		var to_position = input.to_position;
+		var game_piece = input.game_piece;
 		if (!game) {
 			console.log('User with socket id ' + socket.id + ' sent an invalid game id when moving a piece.');
 			return socket.emit('dataError', 'Game id is required.');

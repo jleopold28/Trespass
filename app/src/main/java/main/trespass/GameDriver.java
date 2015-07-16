@@ -29,6 +29,7 @@ public class GameDriver {
     private static Socket mSocket;
     private static String TAG = GameDriver.class.getCanonicalName();
     private static int gameID;
+    private static String deviceString;
     private static SocketEventInterface s;
     private static String opponentTiles;
     private static Emitter.Listener onDataErrorListener = new Emitter.Listener() {
@@ -183,6 +184,9 @@ public class GameDriver {
         } catch(ClassCastException e){
             return UUID.randomUUID().toString();
         }
+        if(deviceString != null){
+            return deviceString;
+        }
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(c);
         String deviceString = settings.getString("device_id", "");
         if(deviceString.length() == 0){
@@ -202,6 +206,7 @@ public class GameDriver {
         } else {
             Log.d(TAG, "Using original device id: " + deviceString);
         }
+        GameDriver.deviceString = deviceString;
         return deviceString;
     }
 
