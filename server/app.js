@@ -682,7 +682,7 @@ waiting_room.on('connection', function (socket) {
 							var move = {};
 							move.from = from_position;
 							move.to = to_position;
-							socket.broadcast.to(socket_id).emit('Move', move);
+							socket.broadcast.to(socket_id).emit('Move', JSON.stringify(move));
 						} else {
 							console.log('Player with socket id: ' + socket_id + ' has dropped connection.');
 							return socket.emit('Error', 'The other player has dropped connection.');

@@ -33,7 +33,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     private ImageButton gameButtons[][];
     private boolean gameOver = false;
     private boolean pieceSelected = false;
-
+    private static String TAG = GameActivity.class.getCanonicalName();
     @Override
     public void onDataError(String s) {}
 
@@ -86,10 +86,12 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     public void onMove(final JSONObject json) {
         //Log.e("MOVE FOUND", json.toString());
         final Context c = this;
+        Log.d(TAG, json.toString());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(c, json.toString(), Toast.LENGTH_LONG).show();
+                if (c != null)
+                    Toast.makeText(c, json.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

@@ -92,24 +92,19 @@ public class GameDriver {
     private static Emitter.Listener onMoveListener = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            String jsonString;
+            JSONObject json = null;
+            Log.d(TAG, args[0].toString());
+
             try {
-                jsonString = (String) args[0];
+                json = new JSONObject((String)args[0]);
             } catch (ClassCastException e) {
                 Log.e(TAG, "Expecting json string in onMoveListener.");
                 return;
+            } catch(JSONException e){
+                Log.e(TAG, "Invalid json string in onMoveListener.");
+                return;
             }
-            if (jsonString == null || jsonString.length() == 0) {
-                s.onMove(null);
-            } else {
-                JSONObject json = null;
-                try {
-                    json = new JSONObject(jsonString);
-                } catch (JSONException e) {
-                    Log.e(TAG, "Invalid JSON string: " + jsonString);
-                }
-                s.onMove(json);
-            }
+            s.onMove(json);
         }
     };
     private static Emitter.Listener onEndListener = new Emitter.Listener() {
