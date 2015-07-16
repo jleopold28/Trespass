@@ -84,6 +84,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
 
     @Override
     public void onMove(final JSONObject json) {
+        //Log.e("MOVE FOUND", json.toString());
         final Context c = this;
         runOnUiThread(new Runnable() {
             @Override
@@ -180,7 +181,6 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         g = GameDriver.getInstance();
         InitializationObject i = g.getInitializationObject();
         int[][] arr = i.getTiles();
-
         g.setUpGameBoard();
 
         String num40 = "num" + arr[0][0];
@@ -320,6 +320,10 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                 if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1]).contains(g.gb.getCoordinate(row, col))) {
                     cleanBlankTile();
                     g.gb.setMove(prevTileCoordinate[0], prevTileCoordinate[1], row, col);
+
+                    int[] to = {row,col};
+                    g.new_move(prevTileCoordinate,to, g.gb.getTile(row,col).getNumber());
+
                     gameButtons[row][col].setBackgroundResource(getResources().
                             getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
                     gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);

@@ -214,6 +214,25 @@ public class GameDriver {
         mSocket.emit("user_info", o);
     }
 
+    public static void new_move(int[] from_position, int[] to_position, int game_piece){
+        JSONObject o = new JSONObject();
+        JSONObject from = new JSONObject();
+        JSONObject to = new JSONObject();
+        try {
+            from.put("row", from_position[0]);
+            from.put("column", from_position[1]);
+
+            to.put("row", to_position[0]);
+            to.put("column", to_position[1]);
+
+            //o.put("from_position",from);
+            //o.put()
+        }catch(Exception e){
+            Log.e(TAG, e.toString());
+        }
+        mSocket.emit("new_move",gameID, getDeviceString(), from, to, game_piece);
+    }
+
     public static void setUpGameBoard() {
         //take values out of local DB
 
