@@ -241,6 +241,20 @@ public class GameDriver {
         }
         mSocket.emit("new_move",o);
     }
+    public static void start_game(){
+        JSONObject o = new JSONObject();
+
+        try{
+            o.put("game",gameID);
+            o.put("device_id", getDeviceString());
+            o.put("secret_number", p.getSecretNum());
+            //o.put("avata")
+
+        }catch(Exception e){
+            Log.e(TAG, e.toString());
+        }
+        mSocket.emit("start_game",o);
+    }
 
     public static void setUpGameBoard() {
         //take values out of local DB
