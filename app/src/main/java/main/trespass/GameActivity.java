@@ -92,8 +92,31 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
             public void run() {
                 if (c != null)
                     Toast.makeText(c, json.toString(), Toast.LENGTH_LONG).show();
+                int prev_row = 0;
+                int prev_col = 0;
+                int to_row = 0;
+                int to_col = 0;
+
+                try {
+                    JSONObject from = json.getJSONObject("from");
+                    prev_row = 5 - from.getInt("row");
+                    prev_col = 4 - from.getInt("column");
+
+                    JSONObject to = json.getJSONObject("to");
+                    to_row = 5 - to.getInt("row");
+                    to_col = 4 - to.getInt("column");
+
+                }catch(Exception e){
+                    Log.e(TAG, "somethings wrong with the move logic!");
+                }
+                g.gb.setMove(prev_row, prev_col, to_row, to_col);
+
+                gameButtons[to_row][to_col].setBackgroundResource(getResources().
+                        getIdentifier("num" + Integer.toString(g.gb.getTile(prev_row,prev_col).getNumber()), "drawable", c.getPackageName()));
+                gameButtons[prev_row][prev_col].setBackgroundResource(R.drawable.blank);
             }
         });
+
     }
 
     @Override
@@ -319,12 +342,12 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     public void clickOnIB(int row, int col) {
         if (g.isTurn) {
             if (g.gb.getTile(row, col).isBlank()) {
-                if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1]).contains(g.gb.getCoordinate(row, col))) {
+                if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1]).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
                     cleanBlankTile();
                     g.gb.setMove(prevTileCoordinate[0], prevTileCoordinate[1], row, col);
 
                     int[] to = {row,col};
-                    g.new_move(prevTileCoordinate,to, g.gb.getTile(row,col).getNumber());
+                    g.new_move(prevTileCoordinate, to, g.gb.getTile(row, col).getNumber());
 
                     gameButtons[row][col].setBackgroundResource(getResources().
                             getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
