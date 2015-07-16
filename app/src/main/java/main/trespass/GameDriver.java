@@ -301,6 +301,7 @@ public class GameDriver {
     }
 
     public static void playGame(TileChangeNotifier t) {
+        start_game();
         //while( gb.checkForWin() == 0){
 
         //who goes first?
