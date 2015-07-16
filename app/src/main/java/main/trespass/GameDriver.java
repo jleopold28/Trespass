@@ -225,12 +225,16 @@ public class GameDriver {
             to.put("row", to_position[0]);
             to.put("column", to_position[1]);
 
-            //o.put("from_position",from);
-            //o.put()
+            o.put("game",gameID);
+            o.put("device_id",getDeviceString());
+            o.put("from_position", from);
+            o.put("to_position", to);
+            o.put("game_piece", game_piece);
+
         }catch(Exception e){
             Log.e(TAG, e.toString());
         }
-        mSocket.emit("new_move",gameID, getDeviceString(), from, to, game_piece);
+        mSocket.emit("new_move",o);
     }
 
     public static void setUpGameBoard() {
