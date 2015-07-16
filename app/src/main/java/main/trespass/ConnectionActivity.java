@@ -66,20 +66,22 @@ public class ConnectionActivity extends Activity implements GameDriver.SocketEve
                         s = "Searching for an Opponent";
                     }
                     dots++;
-                    int modded = dots % 3;
+                    int modded = dots % 4;
                     switch (modded) {
                         case 0:
-                            s = s.concat(".");
                             break;
                         case 1:
-                            s = s.concat("..");
+                            s = s.concat(".");
                             break;
                         case 2:
+                            s = s.concat("..");
+                            break;
+                        case 3:
                             s = s.concat("...");
                             break;
                     }
                     setText(s);
-                    handler.postDelayed(this, 2000);
+                    handler.postDelayed(this, 1000);
             }
         }, 2000);
     }
