@@ -112,8 +112,9 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                 g.gb.setMove(prev_row, prev_col, to_row, to_col);
 
                 gameButtons[to_row][to_col].setBackgroundResource(getResources().
-                        getIdentifier("num" + Integer.toString(g.gb.getTile(prev_row,prev_col).getNumber()), "drawable", c.getPackageName()));
+                        getIdentifier("opponum" + Integer.toString(g.gb.getTile(prev_row,prev_col).getNumber()), "drawable", c.getPackageName()));
                 gameButtons[prev_row][prev_col].setBackgroundResource(R.drawable.blank);
+                g.myTurn = true;
             }
         });
 
@@ -348,7 +349,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
 
                     int[] to = {row,col};
                     g.new_move(prevTileCoordinate, to, g.gb.getTile(row, col).getNumber());
-
+                    g.myTurn = false;
                     gameButtons[row][col].setBackgroundResource(getResources().
                             getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
                     gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);
