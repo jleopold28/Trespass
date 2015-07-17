@@ -130,12 +130,17 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     }
 
     @Override
-    public void onEnd(String s) {
-        if(s.contains("Win")){
-            showEndGameDialog(true);
-        } else {
-            showEndGameDialog(false);
-        }
+    public void onEnd(final String s) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(s.equals("You win")){
+                    showEndGameDialog(true);
+                } else {
+                    showEndGameDialog(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -350,7 +355,8 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     public void clickOnIB54(View v) {clickOnIB(5,4);}
 
     public void clickOnIB(int row, int col) {
-        if(g.myTurn && (row!=lastMovedTile[0] && col!=lastMovedTile[1])) {
+        //showEndGameDialog(true);
+        if(g.myTurn) {
             if (g.gb.getTile(row, col).isBlank()) {
                 if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1],g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]).isPlayerPiece()).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
                     cleanBlankTile();
@@ -375,6 +381,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                 }
             } else { //its a game piece
                 //if (row!=lastMovedTile[0] && col!=lastMovedTile[1]) {
+                if (!(row==lastMovedTile[0] && col==lastMovedTile[1])) {
                     if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
                         if (g.gb.getTile(row, col).isPlayerPiece()) {
                             gameButtons[row][col].setBackgroundResource(getResources().
@@ -411,7 +418,8 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     }
                     hasTileSelected = true;
                     //}
-                //}
+                    //}
+                }
             }
         }
     }
@@ -461,7 +469,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
             builder.setPositiveButton("Again", new DialogInterface.OnClickListener() { // click on Again, back to ConnectionActivity looking for another game
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    startActivity(new Intent(GameActivity.this,ConnectionActivity.class));
+                    startActivity(new Intent(GameActivity.this,InitializationActivity.class));
                 }
             });
             builder.setNegativeButton("Main Menu", new DialogInterface.OnClickListener() { // click on Main Menu, back to the MainActivity
