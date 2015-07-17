@@ -372,19 +372,28 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                 }
             } else { //its a game piece
                 if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
-                    gameButtons[row][col].setBackgroundResource(getResources().
-                            getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                    if (g.gb.getTile(row,col).isPlayerPiece()) {
+                        gameButtons[row][col].setBackgroundResource(getResources().
+                                getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                    } else {
+                        gameButtons[row][col].setBackgroundResource(getResources().
+                                getIdentifier("opponum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                    }
                     prevTileCoordinate[0] = -1;
                     prevTileCoordinate[1] = -1;
                     hasTileSelected = false;
                     cleanBlankTile();
                     return;
                 }
-                if (g.gb.getTile(row, col).isPlayerPiece()) { //if its owned by you
+                //if (g.gb.getTile(row, col).isPlayerPiece()) { //if its owned by you
                     if (hasTileSelected) { //we have already selected a tile
-
-                        gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
-                                getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        if (g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]).isPlayerPiece()) {
+                            gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
+                                    getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        } else {
+                            gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
+                                    getIdentifier("opponum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        }
                         cleanBlankTile();
                     }
                     int currNum = g.gb.getTile(row, col).getNumber();
@@ -397,7 +406,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                                 getIdentifier("validtile", "drawable", this.getPackageName()));
                     }
                     hasTileSelected = true;
-                }
+                //}
             }
         }
     }
