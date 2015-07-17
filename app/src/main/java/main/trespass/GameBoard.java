@@ -171,7 +171,7 @@ public class GameBoard {
 
 
     private void backwardSlideValidation(int row, int col) {
-        if (row>0) {
+        if (row<5) {
             if ((gameBoard[row+1][col].isBlank()) && (!validTiles.contains(boardPos[row+1][col])) ) { //check if the front tile is blank
                 validTiles.add(boardPos[row+1][col]); //the front tile is valid
                 backwardSlideValidation(row+1,col); //get the forward moving valid tiles after moving forward
@@ -202,7 +202,7 @@ public class GameBoard {
         }
     }
     private void slideBackwardValidation(int row, int col) {
-        if (row>0) {
+        if (row<5) {
             if ((gameBoard[row+1][col].isBlank()) && (!validTiles.contains(boardPos[row+1][col])) ) { //check if the front tile is blank
                 validTiles.add(boardPos[row + 1][col]); //the front tile is valid
                 slideBackwardValidation(row + 1, col); //get the forward moving valid tiles after moving forward
@@ -233,7 +233,7 @@ public class GameBoard {
         }
     }
     private void jumpBackwardValidation(int row, int col) {
-        if (row<5) {
+        if (row<4) {
             if ((!gameBoard[row+1][col].isBlank()) && (gameBoard[row+2][col].isBlank()) && (!validTiles.contains(boardPos[row+2][col]))) { //check if it could jump forward
                 validTiles.add(boardPos[row+2][col]); //the forward jumping is valid
                 jumpBackwardValidation(row+2,col); //get the jumping valid tiles after jumping forward
