@@ -29,6 +29,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     ImageView playerAvatar;
     GameDriver g;
     int[] prevTileCoordinate = new int[]{-1,-1};
+    int[] lastMovedTile = new int[]{2,0};
     boolean hasTileSelected = false;
     private ImageButton gameButtons[][];
     private boolean gameOver = false;
@@ -105,6 +106,8 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     JSONObject to = json.getJSONObject("to");
                     to_row = 5 - to.getInt("row");
                     to_col = 4 - to.getInt("column");
+                    lastMovedTile[0] = to_row;
+                    lastMovedTile[1] = to_col;
 
                 }catch(Exception e){
                     Log.e(TAG, "somethings wrong with the move logic!");
@@ -371,23 +374,24 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     hasTileSelected = false;
                 }
             } else { //its a game piece
-                if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
-                    if (g.gb.getTile(row,col).isPlayerPiece()) {
-                        gameButtons[row][col].setBackgroundResource(getResources().
-                                getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
-                    } else {
-                        gameButtons[row][col].setBackgroundResource(getResources().
-                                getIdentifier("opponum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                if (row==lastMovedTile[0] && col==lastMovedTile[1]) {
+                    if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
+                        if (g.gb.getTile(row, col).isPlayerPiece()) {
+                            gameButtons[row][col].setBackgroundResource(getResources().
+                                    getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        } else {
+                            gameButtons[row][col].setBackgroundResource(getResources().
+                                    getIdentifier("opponum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        }
+                        prevTileCoordinate[0] = -1;
+                        prevTileCoordinate[1] = -1;
+                        hasTileSelected = false;
+                        cleanBlankTile();
+                        return;
                     }
-                    prevTileCoordinate[0] = -1;
-                    prevTileCoordinate[1] = -1;
-                    hasTileSelected = false;
-                    cleanBlankTile();
-                    return;
-                }
-                //if (g.gb.getTile(row, col).isPlayerPiece()) { //if its owned by you
+                    //if (g.gb.getTile(row, col).isPlayerPiece()) { //if its owned by you
                     if (hasTileSelected) { //we have already selected a tile
-                        if (g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]).isPlayerPiece()) {
+                        if (g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).isPlayerPiece()) {
                             gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
                                     getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
                         } else {
@@ -401,12 +405,13 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     prevTileCoordinate[1] = col;
                     gameButtons[row][col].setBackgroundResource(getResources().
                             getIdentifier("selectednum" + Integer.toString(currNum), "drawable", this.getPackageName()));
-                    for (int[] validTile : g.gb.getValidTiles(row, col,g.gb.getTile(row,col).isPlayerPiece())) {
+                    for (int[] validTile : g.gb.getValidTiles(row, col, g.gb.getTile(row, col).isPlayerPiece())) {
                         gameButtons[validTile[0]][validTile[1]].setBackgroundResource(getResources().
                                 getIdentifier("validtile", "drawable", this.getPackageName()));
                     }
                     hasTileSelected = true;
-                //}
+                    //}
+                }
             }
         }
     }
