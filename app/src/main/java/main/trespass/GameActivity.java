@@ -111,8 +111,14 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                 }
                 g.gb.setMove(prev_row, prev_col, to_row, to_col);
 
-                gameButtons[to_row][to_col].setBackgroundResource(getResources().
-                        getIdentifier("opponum" + Integer.toString(g.gb.getTile(prev_row,prev_col).getNumber()), "drawable", c.getPackageName()));
+                if(g.gb.getTile(to_row,to_col).isPlayerPiece()){gameButtons[to_row][to_col].setBackgroundResource(getResources().
+                        getIdentifier("num" + Integer.toString(g.gb.getTile(prev_row,prev_col).getNumber()), "drawable", c.getPackageName()));
+
+                }
+                else {
+                    gameButtons[to_row][to_col].setBackgroundResource(getResources().
+                            getIdentifier("opponum" + Integer.toString(g.gb.getTile(prev_row, prev_col).getNumber()), "drawable", c.getPackageName()));
+                }
                 gameButtons[prev_row][prev_col].setBackgroundResource(R.drawable.blank);
                 g.myTurn = true;
             }
@@ -341,17 +347,24 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     public void clickOnIB54(View v) {clickOnIB(5,4);}
 
     public void clickOnIB(int row, int col) {
-        if (g.isTurn) {
+        if(g.myTurn) {
             if (g.gb.getTile(row, col).isBlank()) {
-                if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1]).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
+                if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1],g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]).isPlayerPiece()).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
                     cleanBlankTile();
                     g.gb.setMove(prevTileCoordinate[0], prevTileCoordinate[1], row, col);
 
-                    int[] to = {row,col};
+                    int[] to = {row, col};
                     g.new_move(prevTileCoordinate, to, g.gb.getTile(row, col).getNumber());
                     g.myTurn = false;
-                    gameButtons[row][col].setBackgroundResource(getResources().
-                            getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+
+                    if(g.gb.getTile(row,col).isPlayerPiece()) {
+                        gameButtons[row][col].setBackgroundResource(getResources().
+                                getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                    }
+                    else{
+                        gameButtons[row][col].setBackgroundResource(getResources().
+                                getIdentifier("opponum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                    }
                     gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);
                     prevTileCoordinate[0] = -1;
                     prevTileCoordinate[1] = -1;
@@ -379,7 +392,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     prevTileCoordinate[1] = col;
                     gameButtons[row][col].setBackgroundResource(getResources().
                             getIdentifier("selectednum" + Integer.toString(currNum), "drawable", this.getPackageName()));
-                    for (int[] validTile : g.gb.getValidTiles(row, col)) {
+                    for (int[] validTile : g.gb.getValidTiles(row, col,g.gb.getTile(row,col).isPlayerPiece())) {
                         gameButtons[validTile[0]][validTile[1]].setBackgroundResource(getResources().
                                 getIdentifier("validtile", "drawable", this.getPackageName()));
                     }
