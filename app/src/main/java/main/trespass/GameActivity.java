@@ -350,7 +350,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     public void clickOnIB54(View v) {clickOnIB(5,4);}
 
     public void clickOnIB(int row, int col) {
-        if(g.myTurn) {
+        if(g.myTurn && (row!=lastMovedTile[0] && col!=lastMovedTile[1])) {
             if (g.gb.getTile(row, col).isBlank()) {
                 if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1],g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]).isPlayerPiece()).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
                     cleanBlankTile();
@@ -374,7 +374,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     hasTileSelected = false;
                 }
             } else { //its a game piece
-                if (row==lastMovedTile[0] && col==lastMovedTile[1]) {
+                //if (row!=lastMovedTile[0] && col!=lastMovedTile[1]) {
                     if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
                         if (g.gb.getTile(row, col).isPlayerPiece()) {
                             gameButtons[row][col].setBackgroundResource(getResources().
@@ -411,7 +411,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     }
                     hasTileSelected = true;
                     //}
-                }
+                //}
             }
         }
     }
