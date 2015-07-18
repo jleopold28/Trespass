@@ -152,7 +152,7 @@ public class GameBoard {
         if (col<colCount-1) {
             if (gameBoard[row][col+1].isBlank()) { //check if the right tile is blank
                 if (!validTiles.contains(boardPos[row][col+1])) {validTiles.add(boardPos[row][col+1]);} //the right tile is valid
-                forwardSlideRightValidation(row, col + 1); //get the slide moving valid tiles after moving to the right
+                slideForwardRightValidation(row, col + 1); //get the slide moving valid tiles after moving to the right
                 slideForwardValidation(row,col+1);
                 jumpValidation(row, col + 1); //get the jumping valid tiles after moving to the right
                 //slideForwardValidation(row,col+1);
@@ -255,7 +255,7 @@ public class GameBoard {
         if (col<colCount-1) {
             if (gameBoard[row][col+1].isBlank()) { //check if the right tile is blank
                 if (!validTiles.contains(boardPos[row][col+1])) {validTiles.add(boardPos[row][col+1]);} //the right tile is valid
-                backwardSlideRightValidation(row, col + 1); //get the slide moving valid tiles after moving to the right
+                slideBackwardRightValidation(row, col + 1); //get the slide moving valid tiles after moving to the right
                 slideBackwardValidation(row, col + 1);
                 jumpBackwardValidation(row, col + 1); //get the jumping valid tiles after moving to the right
                 //slideForwardValidation(row,col+1);
