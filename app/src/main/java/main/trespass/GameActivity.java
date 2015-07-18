@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,7 +27,8 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     TextView playerUsername;
     ImageView playerAvatar;
     GameDriver g;
-    int[] prevTileCoordinate = new int[]{-1, -1};
+    int[] prevTileCoordinate = new int[]{-1,-1};
+    int[] lastMovedTile = new int[]{2,0};
     boolean hasTileSelected = false;
     private ImageButton gameButtons[][];
     private boolean gameOver = false;
@@ -89,12 +89,10 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     public void onMove(final JSONObject json) {
         //Log.e("MOVE FOUND", json.toString());
         final Context c = this;
-        Log.d(TAG, json.toString());
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (c != null)
-                    Toast.makeText(c, json.toString(), Toast.LENGTH_LONG).show();
+                Toast.makeText(c, json.toString(), Toast.LENGTH_LONG).show();
                 int prev_row = 0;
                 int prev_col = 0;
                 int to_row = 0;
@@ -108,14 +106,22 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     JSONObject to = json.getJSONObject("to");
                     to_row = 5 - to.getInt("row");
                     to_col = 4 - to.getInt("column");
+                    lastMovedTile[0] = to_row;
+                    lastMovedTile[1] = to_col;
 
                 } catch (Exception e) {
                     Log.e(TAG, "somethings wrong with the move logic!");
                 }
                 g.gb.setMove(prev_row, prev_col, to_row, to_col);
 
-                gameButtons[to_row][to_col].setBackgroundResource(getResources().
-                        getIdentifier("opponum" + Integer.toString(g.gb.getTile(prev_row, prev_col).getNumber()), "drawable", c.getPackageName()));
+                if(g.gb.getTile(to_row,to_col).isPlayerPiece()){gameButtons[to_row][to_col].setBackgroundResource(getResources().
+                        getIdentifier("num" + Integer.toString(g.gb.getTile(prev_row,prev_col).getNumber()), "drawable", c.getPackageName()));
+
+                }
+                else {
+                    gameButtons[to_row][to_col].setBackgroundResource(getResources().
+                            getIdentifier("opponum" + Integer.toString(g.gb.getTile(prev_row, prev_col).getNumber()), "drawable", c.getPackageName()));
+                }
                 gameButtons[prev_row][prev_col].setBackgroundResource(R.drawable.blank);
                 g.myTurn = true;
             }
@@ -124,12 +130,17 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     }
 
     @Override
-    public void onEnd(String s) {
-        if (s.contains("Win")) {
-            showEndGameDialog(true);
-        } else {
-            showEndGameDialog(false);
-        }
+    public void onEnd(final String s) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(s.equals("You win")){
+                    showEndGameDialog(true);
+                } else {
+                    showEndGameDialog(false);
+                }
+            }
+        });
     }
 
     @Override
@@ -404,46 +415,67 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     }
 
     public void clickOnIB(int row, int col) {
-        if (g.gb.getTile(row, col).isBlank()) {
-            if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1]).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
-                cleanBlankTile();
-                g.gb.setMove(prevTileCoordinate[0], prevTileCoordinate[1], row, col);
-
-                int[] to = {row, col};
-                g.new_move(prevTileCoordinate, to, g.gb.getTile(row, col).getNumber());
-                g.myTurn = false;
-                gameButtons[row][col].setBackgroundResource(getResources().
-                        getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
-                gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);
-                prevTileCoordinate[0] = -1;
-                prevTileCoordinate[1] = -1;
-                hasTileSelected = false;
-            }
-        } else { //its a game piece
-            if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
-                gameButtons[row][col].setBackgroundResource(getResources().
-                        getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
-                prevTileCoordinate[0] = -1;
-                prevTileCoordinate[1] = -1;
-                hasTileSelected = false;
-                cleanBlankTile();
-                return;
-            }
-            if (g.gb.getTile(row, col).isPlayerPiece()) { //if its owned by you
-                if (hasTileSelected) { //we have already selected a tile
-
-                    gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
-                            getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+        //showEndGameDialog(true);
+        if(g.myTurn) {
+            if (g.gb.getTile(row, col).isBlank()) {
+                if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1],g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]).isPlayerPiece()).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
                     cleanBlankTile();
+                    g.gb.setMove(prevTileCoordinate[0], prevTileCoordinate[1], row, col);
+
+                    int[] to = {row, col};
+                    g.new_move(prevTileCoordinate, to, g.gb.getTile(row, col).getNumber());
+                    g.myTurn = false;
+
+                    if(g.gb.getTile(row,col).isPlayerPiece()) {
+                        gameButtons[row][col].setBackgroundResource(getResources().
+                                getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                    }
+                    else{
+                        gameButtons[row][col].setBackgroundResource(getResources().
+                                getIdentifier("opponum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                    }
+                    gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);
+                    prevTileCoordinate[0] = -1;
+                    prevTileCoordinate[1] = -1;
+                    hasTileSelected = false;
                 }
-                int currNum = g.gb.getTile(row, col).getNumber();
-                prevTileCoordinate[0] = row;
-                prevTileCoordinate[1] = col;
-                gameButtons[row][col].setBackgroundResource(getResources().
-                        getIdentifier("selectednum" + Integer.toString(currNum), "drawable", this.getPackageName()));
-                for (int[] validTile : g.gb.getValidTiles(row, col)) {
-                    gameButtons[validTile[0]][validTile[1]].setBackgroundResource(getResources().
-                            getIdentifier("validtile", "drawable", this.getPackageName()));
+            } else { //its a game piece
+                if (!(row==lastMovedTile[0] && col==lastMovedTile[1])) {
+                    if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
+                        if (g.gb.getTile(row, col).isPlayerPiece()) {
+                            gameButtons[row][col].setBackgroundResource(getResources().
+                                    getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        } else {
+                            gameButtons[row][col].setBackgroundResource(getResources().
+                                    getIdentifier("opponum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        }
+                        prevTileCoordinate[0] = -1;
+                        prevTileCoordinate[1] = -1;
+                        hasTileSelected = false;
+                        cleanBlankTile();
+                        return;
+                    }
+                    //if (g.gb.getTile(row, col).isPlayerPiece()) { //if its owned by you
+                    if (hasTileSelected) { //we have already selected a tile
+                        if (g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).isPlayerPiece()) {
+                            gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
+                                    getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        } else {
+                            gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
+                                    getIdentifier("opponum" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                        }
+                        cleanBlankTile();
+                    }
+                    int currNum = g.gb.getTile(row, col).getNumber();
+                    prevTileCoordinate[0] = row;
+                    prevTileCoordinate[1] = col;
+                    gameButtons[row][col].setBackgroundResource(getResources().
+                            getIdentifier("selectednum" + Integer.toString(currNum), "drawable", this.getPackageName()));
+                    for (int[] validTile : g.gb.getValidTiles(row, col, g.gb.getTile(row, col).isPlayerPiece())) {
+                        gameButtons[validTile[0]][validTile[1]].setBackgroundResource(getResources().
+                                getIdentifier("validtile", "drawable", this.getPackageName()));
+                    }
+                    hasTileSelected = true;
                 }
                 hasTileSelected = true;
             }
@@ -494,20 +526,20 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
             message = "You Lose!";
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-        builder.setTitle("Game Over");
-        builder.setMessage(message);
-        builder.setPositiveButton("Again", new DialogInterface.OnClickListener() { // click on Again, back to ConnectionActivity looking for another game
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(GameActivity.this, ConnectionActivity.class));
-            }
-        });
-        builder.setNegativeButton("Main Menu", new DialogInterface.OnClickListener() { // click on Main Menu, back to the MainActivity
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                startActivity(new Intent(GameActivity.this, MainActivity.class));
-            }
-        });
+            builder.setTitle("Game Over");
+            builder.setMessage(message);
+            builder.setPositiveButton("Again", new DialogInterface.OnClickListener() { // click on Again, back to ConnectionActivity looking for another game
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(GameActivity.this,InitializationActivity.class));
+                }
+            });
+            builder.setNegativeButton("Main Menu", new DialogInterface.OnClickListener() { // click on Main Menu, back to the MainActivity
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(GameActivity.this,MainActivity.class));
+                }
+            });
         builder.show();
     }
 
