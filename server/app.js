@@ -382,6 +382,7 @@ waiting_room.on('connection', function (socket) {
 				},
 				//Tell players the game PK that they are in.
 				function (game_row, player2_info, player2_tiles, callback) {
+					var socket_id = player2_info.socket_id;
 					if (io.sockets.connected[socket_id]) {
 						console.log('Starting game id: ' + game_row.game);
 						var user2_info = {};
