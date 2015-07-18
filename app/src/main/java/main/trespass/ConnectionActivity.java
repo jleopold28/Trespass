@@ -48,6 +48,7 @@ public class ConnectionActivity extends Activity implements GameDriver.SocketEve
     public void findOpponent() {
         //find the opponent
         g = GameDriver.getInstance();
+        g.gb.refreshGameBoard();
         InitializationObject i = g.getInitializationObject();
         g.setSocketListener(this);
         g.connectSocket();

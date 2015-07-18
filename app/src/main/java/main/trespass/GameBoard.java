@@ -30,6 +30,14 @@ public class GameBoard {
             }
         }
     }
+    public void refreshGameBoard() {
+        gameBoard = new Tile[rowCount][colCount];
+        for(int r = 0; r<rowCount;r++) { //initialize the board
+            for(int c = 0; c<colCount;c++) {
+                gameBoard[r][c] = new Tile();
+            }
+        }
+    }
     public Tile getTile( int rowCount, int colCount){
         return gameBoard[rowCount][colCount];
     }
