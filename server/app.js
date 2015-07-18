@@ -311,7 +311,7 @@ waiting_room.on('connection', function (socket) {
 												client.end();
 												return callback(err);
 											}
-											return callback(null, waiting_list, wait_list_row, player2_info, client);
+											return callback(null, waiting_list, wait_list_row, result.rows[0].player_info, client);
 										});
 									} else {
 										console.log("The other player's socket id: " + socket_id + ' is invalid. Remove wait list entry.');
