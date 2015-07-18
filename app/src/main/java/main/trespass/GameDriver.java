@@ -33,6 +33,7 @@ public class GameDriver {
     private static SocketEventInterface s;
     private static String opponentTiles;
     protected static boolean myTurn = false;
+    protected static boolean myStart = false;
     private static Emitter.Listener onDataErrorListener = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -99,6 +100,8 @@ public class GameDriver {
                 String jsonString = (String)args[0];
                 if(jsonString.length() == 0){
                     myTurn = true;
+                    myStart = true;
+                    return;
                 }
                 json = new JSONObject(jsonString);
             } catch (ClassCastException e) {
@@ -247,7 +250,8 @@ public class GameDriver {
             o.put("game",gameID);
             o.put("device_id", getDeviceString());
             o.put("secret_number", p.getSecretNum());
-            //o.put("avata")
+            o.put("avatar", p.getAvatar());
+            o.put("username", p.getUsername());
 
         }catch(Exception e){
             Log.e(TAG, e.toString());
