@@ -1,6 +1,6 @@
 var app = require('express')();
 var http = require('http').Server(app);
-var pg = require('pg');
+var pg = require('pg').native;
 var waterfall = require('async-waterfall');
 var async = require('async');
 app.get('/', function (req, res) {
@@ -24,6 +24,65 @@ var express = require('express');
 var router = express.Router();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+
+
+app.get('/game/:id', function (req, res, next) {
+	var id = req.params.id;
+	if (isNaN(id)) {
+		next();
+	}
+	pg.connect(connectionString, function (err, client, done) {
+
+		if (err) {
+			socket.emit('Error', 'Could not connect to database.');
+			return console.error('Could not connect to database.', err);
+		}
+
+		client.query("select * \
+						            from tb_game \
+						           where game = $1", [id],
+			function (err, result) {
+				done();
+				if (result && result.rowCount > 0) {
+					var started = result.rows[0].started;
+					var finished = result.rows[0].finished;
+					var aborted = result.rows[0].aborted;
+					var status = {};
+					status.game = id;
+					status.created = result.rows[0].created;
+					if (started) {
+						status.started = true;
+					} else {
+						status.started = false;
+					}
+					if (finished) {
+						status.finished = true;
+					} else {
+						status.finished = false;
+					}
+					if (aborted) {
+						status.aborted = true;
+					} else {
+						status.aborted = false;
+					}
+					res.json(status);
+				} else {
+					console.log('Game id ' + id + ' does not exist in database.');
+					res.json({
+						"Error": "Game not found."
+					});
+				}
+			});
+	});
+
+});
+
+app.use('*', function (req, res) {
+	res.status(404).json({
+		"Error": "Not found"
+	});
+});
+
 var waiting_room = io.of('/trespass');
 waiting_room.on('connection', function (socket) {
 	console.log('A user has connected.');
@@ -400,7 +459,7 @@ waiting_room.on('connection', function (socket) {
 						query = 'update tb_game set player_1_secret = $1 where game = $2';
 						client.query(query, [secret_number, game], function (err, result) {
 							if (err) return callback(err);
-							if (game_row.player_2_secret) {
+							if (game_row.player_2_secret || game_row.player_2_secret === 0) {
 								callback(null, client, 1);
 							} else {
 								client.query('commit', function (err, result) {
@@ -417,7 +476,7 @@ waiting_room.on('connection', function (socket) {
 						query = 'update tb_game set player_2_secret = $1 where game = $2';
 						client.query(query, [secret_number, game], function (err, result) {
 							if (err) return callback(err);
-							if (game_row.player_1_secret) {
+							if (game_row.player_1_secret || game_row.player_1_secret === 0) {
 								callback(null, client, 2);
 							} else {
 								client.query('commit', function (err, result) {
@@ -677,7 +736,6 @@ waiting_room.on('connection', function (socket) {
 						});
 					} else {
 						console.log('Notifying other player of the move.');
-						socket.emit('Info', 'Wait for the other player.');
 						if (io.sockets.connected[socket_id]) {
 							var move = {};
 							move.from = from_position;

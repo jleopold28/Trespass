@@ -28,14 +28,16 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     TextView playerUsername;
     ImageView playerAvatar;
     GameDriver g;
-    int[] prevTileCoordinate = new int[]{-1,-1};
+    int[] prevTileCoordinate = new int[]{-1, -1};
     boolean hasTileSelected = false;
     private ImageButton gameButtons[][];
     private boolean gameOver = false;
     private boolean pieceSelected = false;
     private static String TAG = GameActivity.class.getCanonicalName();
+
     @Override
-    public void onDataError(String s) {}
+    public void onDataError(String s) {
+    }
 
     @Override
     public void onError(final String s) {
@@ -80,7 +82,8 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     }
 
     @Override
-    public void onGame() {}
+    public void onGame() {
+    }
 
     @Override
     public void onMove(final JSONObject json) {
@@ -106,13 +109,13 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     to_row = 5 - to.getInt("row");
                     to_col = 4 - to.getInt("column");
 
-                }catch(Exception e){
+                } catch (Exception e) {
                     Log.e(TAG, "somethings wrong with the move logic!");
                 }
                 g.gb.setMove(prev_row, prev_col, to_row, to_col);
 
                 gameButtons[to_row][to_col].setBackgroundResource(getResources().
-                        getIdentifier("opponum" + Integer.toString(g.gb.getTile(prev_row,prev_col).getNumber()), "drawable", c.getPackageName()));
+                        getIdentifier("opponum" + Integer.toString(g.gb.getTile(prev_row, prev_col).getNumber()), "drawable", c.getPackageName()));
                 gameButtons[prev_row][prev_col].setBackgroundResource(R.drawable.blank);
                 g.myTurn = true;
             }
@@ -122,7 +125,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
 
     @Override
     public void onEnd(String s) {
-        if(s.contains("Win")){
+        if (s.contains("Win")) {
             showEndGameDialog(true);
         } else {
             showEndGameDialog(false);
@@ -203,196 +206,254 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         return super.onOptionsItemSelected(item);
     }
 
-    private void startNewGame(){
+    private void startNewGame() {
         g = GameDriver.getInstance();
         InitializationObject i = g.getInitializationObject();
         int[][] arr = i.getTiles();
         g.setUpGameBoard();
 
         String num40 = "num" + arr[0][0];
-        gameButtons[4][0].setBackgroundResource(getResources().getIdentifier(num40,"drawable",this.getPackageName()));
+        gameButtons[4][0].setBackgroundResource(getResources().getIdentifier(num40, "drawable", this.getPackageName()));
 
         String num41 = "num" + arr[0][1];
-        gameButtons[4][1].setBackgroundResource(getResources().getIdentifier(num41,"drawable",this.getPackageName()));
+        gameButtons[4][1].setBackgroundResource(getResources().getIdentifier(num41, "drawable", this.getPackageName()));
 
         String num42 = "num" + arr[0][2];
-        gameButtons[4][2].setBackgroundResource(getResources().getIdentifier(num42,"drawable",this.getPackageName()));
+        gameButtons[4][2].setBackgroundResource(getResources().getIdentifier(num42, "drawable", this.getPackageName()));
 
         String num43 = "num" + arr[0][3];
-        gameButtons[4][3].setBackgroundResource(getResources().getIdentifier(num43,"drawable",this.getPackageName()));
+        gameButtons[4][3].setBackgroundResource(getResources().getIdentifier(num43, "drawable", this.getPackageName()));
 
         String num44 = "num" + arr[0][4];
-        gameButtons[4][4].setBackgroundResource(getResources().getIdentifier(num44,"drawable",this.getPackageName()));
+        gameButtons[4][4].setBackgroundResource(getResources().getIdentifier(num44, "drawable", this.getPackageName()));
 
         String num50 = "num" + arr[1][0];
-        gameButtons[5][0].setBackgroundResource(getResources().getIdentifier(num50,"drawable",this.getPackageName()));
+        gameButtons[5][0].setBackgroundResource(getResources().getIdentifier(num50, "drawable", this.getPackageName()));
 
         String num51 = "num" + arr[1][1];
-        gameButtons[5][1].setBackgroundResource(getResources().getIdentifier(num51,"drawable",this.getPackageName()));
+        gameButtons[5][1].setBackgroundResource(getResources().getIdentifier(num51, "drawable", this.getPackageName()));
 
         String num52 = "num" + arr[1][2];
-        gameButtons[5][2].setBackgroundResource(getResources().getIdentifier(num52,"drawable",this.getPackageName()));
+        gameButtons[5][2].setBackgroundResource(getResources().getIdentifier(num52, "drawable", this.getPackageName()));
 
         String num53 = "num" + arr[1][3];
-        gameButtons[5][3].setBackgroundResource(getResources().getIdentifier(num53,"drawable",this.getPackageName()));
+        gameButtons[5][3].setBackgroundResource(getResources().getIdentifier(num53, "drawable", this.getPackageName()));
 
         String num54 = "num" + arr[1][4];
         gameButtons[5][4].setBackgroundResource(getResources().getIdentifier(num54, "drawable", this.getPackageName()));
 
         //set up oppenent side
-        Log.d("test","number00 in " + g.gb.getTile(0,0).getNumber());
-        Log.d("test","number01 in " + g.gb.getTile(0,1).getNumber());
-        Log.d("test","number02 in " + g.gb.getTile(0,2).getNumber());
-        Log.d("test","number03 in " + g.gb.getTile(0,3).getNumber());
-        Log.d("test", "number04 in " + g.gb.getTile(0,4).getNumber());
+        Log.d("test", "number00 in " + g.gb.getTile(0, 0).getNumber());
+        Log.d("test", "number01 in " + g.gb.getTile(0, 1).getNumber());
+        Log.d("test", "number02 in " + g.gb.getTile(0, 2).getNumber());
+        Log.d("test", "number03 in " + g.gb.getTile(0, 3).getNumber());
+        Log.d("test", "number04 in " + g.gb.getTile(0, 4).getNumber());
 
-        String num00 = "opponum" + g.gb.getTile(0,0).getNumber();
-        gameButtons[0][0].setBackgroundResource(getResources().getIdentifier(num00,"drawable", this.getPackageName()));
+        String num00 = "opponum" + g.gb.getTile(0, 0).getNumber();
+        gameButtons[0][0].setBackgroundResource(getResources().getIdentifier(num00, "drawable", this.getPackageName()));
 
-        String num01 = "opponum" + g.gb.getTile(0,1).getNumber();
+        String num01 = "opponum" + g.gb.getTile(0, 1).getNumber();
         gameButtons[0][1].setBackgroundResource(getResources().getIdentifier(num01, "drawable", this.getPackageName()));
 
-        String num02 = "opponum" + g.gb.getTile(0,2).getNumber();
+        String num02 = "opponum" + g.gb.getTile(0, 2).getNumber();
         gameButtons[0][2].setBackgroundResource(getResources().getIdentifier(num02, "drawable", this.getPackageName()));
 
-        String num03 = "opponum" + g.gb.getTile(0,3).getNumber();
+        String num03 = "opponum" + g.gb.getTile(0, 3).getNumber();
         gameButtons[0][3].setBackgroundResource(getResources().getIdentifier(num03, "drawable", this.getPackageName()));
 
-        String num04 = "opponum" + g.gb.getTile(0,4).getNumber();
+        String num04 = "opponum" + g.gb.getTile(0, 4).getNumber();
         gameButtons[0][4].setBackgroundResource(getResources().getIdentifier(num04, "drawable", this.getPackageName()));
 
-        String num10 = "opponum" + g.gb.getTile(1,0).getNumber();
+        String num10 = "opponum" + g.gb.getTile(1, 0).getNumber();
         gameButtons[1][0].setBackgroundResource(getResources().getIdentifier(num10, "drawable", this.getPackageName()));
 
-        String num11 = "opponum" + g.gb.getTile(1,1).getNumber();
+        String num11 = "opponum" + g.gb.getTile(1, 1).getNumber();
         gameButtons[1][1].setBackgroundResource(getResources().getIdentifier(num11, "drawable", this.getPackageName()));
 
-        String num12 = "opponum" + g.gb.getTile(1,2).getNumber();
+        String num12 = "opponum" + g.gb.getTile(1, 2).getNumber();
         gameButtons[1][2].setBackgroundResource(getResources().getIdentifier(num12, "drawable", this.getPackageName()));
 
-        String num13 = "opponum" + g.gb.getTile(1,3).getNumber();
+        String num13 = "opponum" + g.gb.getTile(1, 3).getNumber();
         gameButtons[1][3].setBackgroundResource(getResources().getIdentifier(num13, "drawable", this.getPackageName()));
 
-        String num14 = "opponum" + g.gb.getTile(1,4).getNumber();
+        String num14 = "opponum" + g.gb.getTile(1, 4).getNumber();
         gameButtons[1][4].setBackgroundResource(getResources().getIdentifier(num14, "drawable", this.getPackageName()));
 
         //g.setUpGameBoard();
         g.playGame(this);
     }
 
-    public void clickOnIB00(View v) {clickOnIB(0,0);}
+    public void clickOnIB00(View v) {
+        clickOnIB(0, 0);
+    }
 
-    public void clickOnIB01(View v) {clickOnIB(0,1);}
+    public void clickOnIB01(View v) {
+        clickOnIB(0, 1);
+    }
 
-    public void clickOnIB02(View v) {clickOnIB(0,2);}
+    public void clickOnIB02(View v) {
+        clickOnIB(0, 2);
+    }
 
-    public void clickOnIB03(View v) {clickOnIB(0,3);}
+    public void clickOnIB03(View v) {
+        clickOnIB(0, 3);
+    }
 
-    public void clickOnIB04(View v) {clickOnIB(0,4);}
+    public void clickOnIB04(View v) {
+        clickOnIB(0, 4);
+    }
 
-    public void clickOnIB10(View v) {clickOnIB(1,0);}
+    public void clickOnIB10(View v) {
+        clickOnIB(1, 0);
+    }
 
-    public void clickOnIB11(View v) {clickOnIB(1,1);}
+    public void clickOnIB11(View v) {
+        clickOnIB(1, 1);
+    }
 
-    public void clickOnIB12(View v) {clickOnIB(1,2);}
+    public void clickOnIB12(View v) {
+        clickOnIB(1, 2);
+    }
 
-    public void clickOnIB13(View v) {clickOnIB(1,3);}
+    public void clickOnIB13(View v) {
+        clickOnIB(1, 3);
+    }
 
-    public void clickOnIB14(View v) {clickOnIB(1,4);}
+    public void clickOnIB14(View v) {
+        clickOnIB(1, 4);
+    }
 
-    public void clickOnIB20(View v) {clickOnIB(2,0);}
+    public void clickOnIB20(View v) {
+        clickOnIB(2, 0);
+    }
 
-    public void clickOnIB21(View v) {clickOnIB(2,1);}
+    public void clickOnIB21(View v) {
+        clickOnIB(2, 1);
+    }
 
-    public void clickOnIB22(View v) {clickOnIB(2,2);}
+    public void clickOnIB22(View v) {
+        clickOnIB(2, 2);
+    }
 
-    public void clickOnIB23(View v) {clickOnIB(2,3);}
+    public void clickOnIB23(View v) {
+        clickOnIB(2, 3);
+    }
 
-    public void clickOnIB24(View v) {clickOnIB(2,4);}
+    public void clickOnIB24(View v) {
+        clickOnIB(2, 4);
+    }
 
-    public void clickOnIB30(View v) {clickOnIB(3,0);}
+    public void clickOnIB30(View v) {
+        clickOnIB(3, 0);
+    }
 
-    public void clickOnIB31(View v) {clickOnIB(3,1);}
+    public void clickOnIB31(View v) {
+        clickOnIB(3, 1);
+    }
 
-    public void clickOnIB32(View v) {clickOnIB(3,2);}
+    public void clickOnIB32(View v) {
+        clickOnIB(3, 2);
+    }
 
-    public void clickOnIB33(View v) {clickOnIB(3,3);}
+    public void clickOnIB33(View v) {
+        clickOnIB(3, 3);
+    }
 
-    public void clickOnIB34(View v) {clickOnIB(3,4);}
+    public void clickOnIB34(View v) {
+        clickOnIB(3, 4);
+    }
 
-    public void clickOnIB40(View v) {clickOnIB(4,0);}
+    public void clickOnIB40(View v) {
+        clickOnIB(4, 0);
+    }
 
-    public void clickOnIB41(View v) {clickOnIB(4,1);}
+    public void clickOnIB41(View v) {
+        clickOnIB(4, 1);
+    }
 
-    public void clickOnIB42(View v) {clickOnIB(4,2);}
+    public void clickOnIB42(View v) {
+        clickOnIB(4, 2);
+    }
 
-    public void clickOnIB43(View v) {clickOnIB(4,3);}
+    public void clickOnIB43(View v) {
+        clickOnIB(4, 3);
+    }
 
-    public void clickOnIB44(View v) {clickOnIB(4,4);}
+    public void clickOnIB44(View v) {
+        clickOnIB(4, 4);
+    }
 
-    public void clickOnIB50(View v) {clickOnIB(5,0);}
+    public void clickOnIB50(View v) {
+        clickOnIB(5, 0);
+    }
 
-    public void clickOnIB51(View v) {clickOnIB(5,1);}
+    public void clickOnIB51(View v) {
+        clickOnIB(5, 1);
+    }
 
-    public void clickOnIB52(View v) {clickOnIB(5,2);}
+    public void clickOnIB52(View v) {
+        clickOnIB(5, 2);
+    }
 
-    public void clickOnIB53(View v) {clickOnIB(5,3);}
+    public void clickOnIB53(View v) {
+        clickOnIB(5, 3);
+    }
 
-    public void clickOnIB54(View v) {clickOnIB(5,4);}
+    public void clickOnIB54(View v) {
+        clickOnIB(5, 4);
+    }
 
     public void clickOnIB(int row, int col) {
-        if (g.isTurn) {
-            if (g.gb.getTile(row, col).isBlank()) {
-                if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1]).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
-                    cleanBlankTile();
-                    g.gb.setMove(prevTileCoordinate[0], prevTileCoordinate[1], row, col);
+        if (g.gb.getTile(row, col).isBlank()) {
+            if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1]).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
+                cleanBlankTile();
+                g.gb.setMove(prevTileCoordinate[0], prevTileCoordinate[1], row, col);
 
-                    int[] to = {row,col};
-                    g.new_move(prevTileCoordinate, to, g.gb.getTile(row, col).getNumber());
-                    g.myTurn = false;
-                    gameButtons[row][col].setBackgroundResource(getResources().
-                            getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
-                    gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);
-                    prevTileCoordinate[0] = -1;
-                    prevTileCoordinate[1] = -1;
-                    hasTileSelected = false;
-                }
-            } else { //its a game piece
-                if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
-                    gameButtons[row][col].setBackgroundResource(getResources().
-                            getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
-                    prevTileCoordinate[0] = -1;
-                    prevTileCoordinate[1] = -1;
-                    hasTileSelected = false;
-                    cleanBlankTile();
-                    return;
-                }
-                if (g.gb.getTile(row, col).isPlayerPiece()) { //if its owned by you
-                    if (hasTileSelected) { //we have already selected a tile
+                int[] to = {row, col};
+                g.new_move(prevTileCoordinate, to, g.gb.getTile(row, col).getNumber());
+                g.myTurn = false;
+                gameButtons[row][col].setBackgroundResource(getResources().
+                        getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(R.drawable.blank);
+                prevTileCoordinate[0] = -1;
+                prevTileCoordinate[1] = -1;
+                hasTileSelected = false;
+            }
+        } else { //its a game piece
+            if (prevTileCoordinate[0] == row && prevTileCoordinate[1] == col) {
+                gameButtons[row][col].setBackgroundResource(getResources().
+                        getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                prevTileCoordinate[0] = -1;
+                prevTileCoordinate[1] = -1;
+                hasTileSelected = false;
+                cleanBlankTile();
+                return;
+            }
+            if (g.gb.getTile(row, col).isPlayerPiece()) { //if its owned by you
+                if (hasTileSelected) { //we have already selected a tile
 
-                        gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
-                                getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
-                        cleanBlankTile();
-                    }
-                    int currNum = g.gb.getTile(row, col).getNumber();
-                    prevTileCoordinate[0] = row;
-                    prevTileCoordinate[1] = col;
-                    gameButtons[row][col].setBackgroundResource(getResources().
-                            getIdentifier("selectednum" + Integer.toString(currNum), "drawable", this.getPackageName()));
-                    for (int[] validTile : g.gb.getValidTiles(row, col)) {
-                        gameButtons[validTile[0]][validTile[1]].setBackgroundResource(getResources().
-                                getIdentifier("validtile", "drawable", this.getPackageName()));
-                    }
-                    hasTileSelected = true;
+                    gameButtons[prevTileCoordinate[0]][prevTileCoordinate[1]].setBackgroundResource(getResources().
+                            getIdentifier("num" + Integer.toString(g.gb.getTile(prevTileCoordinate[0], prevTileCoordinate[1]).getNumber()), "drawable", this.getPackageName()));
+                    cleanBlankTile();
                 }
+                int currNum = g.gb.getTile(row, col).getNumber();
+                prevTileCoordinate[0] = row;
+                prevTileCoordinate[1] = col;
+                gameButtons[row][col].setBackgroundResource(getResources().
+                        getIdentifier("selectednum" + Integer.toString(currNum), "drawable", this.getPackageName()));
+                for (int[] validTile : g.gb.getValidTiles(row, col)) {
+                    gameButtons[validTile[0]][validTile[1]].setBackgroundResource(getResources().
+                            getIdentifier("validtile", "drawable", this.getPackageName()));
+                }
+                hasTileSelected = true;
             }
         }
     }
 
     public void cleanBlankTile() {
-        for (int i=0;i<6;i++){
-            for (int j=0;j<5;j++) {
-                if (g.gb.getTile(i,j).isBlank()) {
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (g.gb.getTile(i, j).isBlank()) {
                     gameButtons[i][j].setBackgroundResource(R.drawable.blank);
                 }
             }
@@ -417,32 +478,36 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
 
     private void setOppoInfo(String username, int avatar) {
         oppoUsername.setText(username);
-        oppoAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
+        oppoAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar), "drawable", this.getPackageName()));
     }
 
     private void setPlayerInfo(String username, int avatar) {
         playerUsername.setText(username);
-        playerAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar),"drawable", this.getPackageName()));
+        playerAvatar.setImageResource(getResources().getIdentifier("selectedavatar" + Integer.toString(avatar), "drawable", this.getPackageName()));
     }
 
     public void showEndGameDialog(boolean ifWin) {
         String message;
-        if (ifWin) {message = "Grats! You Win!";} else {message = "You Lose!";}
+        if (ifWin) {
+            message = "Grats! You Win!";
+        } else {
+            message = "You Lose!";
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(GameActivity.this);
-            builder.setTitle("Game Over");
-            builder.setMessage(message);
-            builder.setPositiveButton("Again", new DialogInterface.OnClickListener() { // click on Again, back to ConnectionActivity looking for another game
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    startActivity(new Intent(GameActivity.this,ConnectionActivity.class));
-                }
-            });
-            builder.setNegativeButton("Main Menu", new DialogInterface.OnClickListener() { // click on Main Menu, back to the MainActivity
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    startActivity(new Intent(GameActivity.this,MainActivity.class));
-                }
-            });
+        builder.setTitle("Game Over");
+        builder.setMessage(message);
+        builder.setPositiveButton("Again", new DialogInterface.OnClickListener() { // click on Again, back to ConnectionActivity looking for another game
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(GameActivity.this, ConnectionActivity.class));
+            }
+        });
+        builder.setNegativeButton("Main Menu", new DialogInterface.OnClickListener() { // click on Main Menu, back to the MainActivity
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(GameActivity.this, MainActivity.class));
+            }
+        });
         builder.show();
     }
 
