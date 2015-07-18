@@ -194,7 +194,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         gameButtons[5][4] = (ImageButton) findViewById(R.id.IB54);
         startNewGame();
         GameDriver.setSocketListener(this);
-        onInfo("Your turn");
+        if(g.myStart) onInfo("Your turn");
     }
 
     @Override

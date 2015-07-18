@@ -250,7 +250,8 @@ public class GameDriver {
             o.put("game",gameID);
             o.put("device_id", getDeviceString());
             o.put("secret_number", p.getSecretNum());
-            //o.put("avata")
+            o.put("avatar", p.getAvatar());
+            o.put("username", p.getUsername());
 
         }catch(Exception e){
             Log.e(TAG, e.toString());
