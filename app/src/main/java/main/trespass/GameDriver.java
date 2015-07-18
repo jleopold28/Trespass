@@ -32,8 +32,9 @@ public class GameDriver {
     private static String deviceString;
     private static SocketEventInterface s;
     private static String opponentTiles;
+    protected static String opponentUsername;
+    protected static int opponentAvatar;
     protected static boolean myTurn = false;
-    protected static boolean myStart = false;
     private static Emitter.Listener onDataErrorListener = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
@@ -76,7 +77,21 @@ public class GameDriver {
     private static Emitter.Listener onUserInfoListener = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            opponentTiles = (String) args[0];
+            JSONObject json = null;
+
+            try {
+                String jsonString = (String)args[0];
+                json = new JSONObject(jsonString);
+                opponentTiles = json.getString("tiles");
+                opponentUsername = json.getString("username");
+                opponentAvatar = json.getInt("avatar");
+            } catch (ClassCastException e) {
+                Log.e(TAG, "Expecting json string in onUserInfoListener.");
+                return;
+            } catch(JSONException e){
+                Log.e(TAG, "Invalid json string in onUserInfoListener.");
+                return;
+            }
         }
     };
 
@@ -100,7 +115,7 @@ public class GameDriver {
                 String jsonString = (String)args[0];
                 if(jsonString.length() == 0){
                     myTurn = true;
-                    myStart = true;
+                    s.onMove(null);
                     return;
                 }
                 json = new JSONObject(jsonString);
@@ -215,6 +230,8 @@ public class GameDriver {
     public static void sendUserInfo(JSONObject o) {
         try {
             o.put("device_id", getDeviceString());
+            o.put("avatar", p.getAvatar());
+            o.put("username", p.getUsername());
         } catch (Exception e) {
             Log.e(TAG, e.toString());
         }
@@ -250,8 +267,6 @@ public class GameDriver {
             o.put("game",gameID);
             o.put("device_id", getDeviceString());
             o.put("secret_number", p.getSecretNum());
-            o.put("avatar", p.getAvatar());
-            o.put("username", p.getUsername());
 
         }catch(Exception e){
             Log.e(TAG, e.toString());

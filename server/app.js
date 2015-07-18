@@ -89,6 +89,9 @@ waiting_room.on('connection', function (socket) {
 	socket.on('user_info', function (user_info) {
 		var device_id = user_info.device_id;
 		var tiles = user_info.tiles;
+		var name = user_info.username;
+		var avatar = user_info.avatar;
+
 		if (!device_id) {
 			console.log('User with id ' + socket.id + ' sent an invalid device_id');
 			return socket.emit('dataError', 'Device id is required.');
@@ -131,8 +134,10 @@ waiting_room.on('connection', function (socket) {
 						//Update socket id
 						var player_info = entity_row.player_info;
 						player_info.socket_id = socket.id;
+						player_info.name = name;
+						player_info.avatar = avatar;
 						pg.connect(connectionString, function (err, client, done) {
-							console.log('Updating socket id for user with id ' + device_id + '.');
+							console.log('Updating socket id, username and avatar for user with id ' + device_id + '.');
 							if (err) {
 								socket.emit('Error', 'Could not connect to database.');
 								return console.error('Could not connect to database.', err);
@@ -153,6 +158,8 @@ waiting_room.on('connection', function (socket) {
 						var player_info = {};
 						player_info.device_id = device_id;
 						player_info.socket_id = socket.id;
+						player_info.name = name;
+						player_info.avatar = avatar;
 						//Create entity
 
 						pg.connect(connectionString, function (err, client, done) {
@@ -284,7 +291,7 @@ waiting_room.on('connection', function (socket) {
 							socket.emit('Error', 'Database error');
 							return callback(err);
 						}
-						client.query("select player_info->>'socket_id' as socket_id \
+						client.query("select player_info \
 													from tb_entity where entity = $1", [wait_list_row.player],
 							function (err, result) {
 								if (err) {
@@ -292,7 +299,7 @@ waiting_room.on('connection', function (socket) {
 								}
 								console.log("Getting the other player's socket id");
 								if (result.rowCount > 0) {
-									var socket_id = result.rows[0].socket_id;
+									var socket_id = result.rows[0].player_info.socket_id;
 									console.log("The other player's socket id: " + socket_id);
 
 									//Proceed to next.
@@ -304,7 +311,7 @@ waiting_room.on('connection', function (socket) {
 												client.end();
 												return callback(err);
 											}
-											return callback(null, waiting_list, wait_list_row, socket_id, client);
+											return callback(null, waiting_list, wait_list_row, player2_info, client);
 										});
 									} else {
 										console.log("The other player's socket id: " + socket_id + ' is invalid. Remove wait list entry.');
@@ -340,17 +347,17 @@ waiting_room.on('connection', function (socket) {
 					});
 				},
 				//End transcation
-				function (waiting_list, waiting_list_row, socket_id, client, callback) {
+				function (waiting_list, waiting_list_row, player2_info, client, callback) {
 					client.query("commit", function (err, result) {
 						client.end();
 						if (err) {
 							return callback(err);
 						}
-						callback(null, waiting_list, waiting_list_row, socket_id);
+						callback(null, waiting_list, waiting_list_row, player2_info);
 					});
 				},
 				//Make a new game.
-				function (waiting_list, waiting_list_row, socket_id, callback) {
+				function (waiting_list, waiting_list_row, player2_info, callback) {
 					pg.connect(connectionString, function (err, client, done) {
 
 						if (err) {
@@ -369,17 +376,26 @@ waiting_room.on('connection', function (socket) {
 								return callback(err);
 							}
 							var row = result.rows[0];
-							callback(null, row, socket_id, waiting_list_row.tiles);
+							callback(null, row, player2_info, waiting_list_row.tiles);
 						});
 					});
 				},
 				//Tell players the game PK that they are in.
-				function (game_row, socket_id, player2_tiles, callback) {
+				function (game_row, player2_info, player2_tiles, callback) {
 					if (io.sockets.connected[socket_id]) {
 						console.log('Starting game id: ' + game_row.game);
+						var user2_info = {};
+						user2_info.avatar = player2_info.avatar;
+						user2_info.tiles = player2_tiles;
+						user2_info.username = player2_info.name;
 						socket.emit('userInfo', player2_tiles);
 						socket.emit('Game', game_row.game);
-						socket.broadcast.to(socket_id).emit('userInfo', tiles);
+
+						var user_info = {};
+						user_info.avatar = avatar;
+						user_info.tiles = tiles;
+						user_info.username = name;
+						socket.broadcast.to(socket_id).emit('userInfo', JSON.stringify(user_info));
 						socket.broadcast.to(socket_id).emit('Game', game_row.game);
 					} else {
 						console.log('Player with socket id: ' + socket_id + ' has dropped connection.');
@@ -541,7 +557,6 @@ waiting_room.on('connection', function (socket) {
 							var socket_id = result.rows[0].socket_id;
 							if (io.sockets.connected[socket_id]) {
 								socket.emit('Move', ''); //Tell the user it's his/her turn.
-								socket.broadcast.to(socket_id).emit('Info', 'Game started');
 							} else {
 								console.log('Player with socket id: ' + socket_id + ' has dropped connection.');
 								return socket.emit('Error', 'The other player has dropped connection.');

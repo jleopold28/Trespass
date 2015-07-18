@@ -50,14 +50,14 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                         .setMessage(s)
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // continue with delete
+                                g.end();
+                                startActivity(new Intent(GameActivity.this,InitializationActivity.class));
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
             }
         });
-
     }
 
     @Override
@@ -88,6 +88,10 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     @Override
     public void onMove(final JSONObject json) {
         //Log.e("MOVE FOUND", json.toString());
+        if(json == null){
+            onInfo("Your turn");
+            return;
+        }
         final Context c = this;
         runOnUiThread(new Runnable() {
             @Override
@@ -124,6 +128,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                 }
                 gameButtons[prev_row][prev_col].setBackgroundResource(R.drawable.blank);
                 g.myTurn = true;
+                Toast.makeText(c, "Your turn", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -194,7 +199,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         gameButtons[5][4] = (ImageButton) findViewById(R.id.IB54);
         startNewGame();
         GameDriver.setSocketListener(this);
-        if(g.myStart) onInfo("Your turn");
+        setOppoInfo(g.opponentUsername, g.opponentAvatar);
     }
 
     @Override
