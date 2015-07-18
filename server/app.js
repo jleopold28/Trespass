@@ -394,8 +394,12 @@ waiting_room.on('connection', function (socket) {
 			});
 	});
 
-	socket.on('start_game', function (game, secret_number, device_id) {
-		if (!device_id) {
+	socket.on('start_game', function (input) {
+		var game = input.game;
+        var secret_number = input.secret_number;
+        var device_id = input.device_id;
+
+        if (!device_id) {
 			console.log('User with socket id ' + socket.id + ' sent an invalid device_id when starting game.');
 			return socket.emit('dataError', 'Device id is required.');
 		}
@@ -573,14 +577,13 @@ waiting_room.on('connection', function (socket) {
 			console.log('User with socket id ' + socket.id + ' sent an invalid device id when moving a piece.');
 			return socket.emit('dataError', 'Device id is required.');
 		}
-
-		if (!from_position || !from_position.row || from_position.column) {
+		if (!from_position) {
 			console.log('User with socket id ' + socket.id + ' sent an invalid from position when moving a piece.');
 			return socket.emit('dataError', 'From position is required.');
 		}
 
-		if (!to_position || !to_position.row || !to_position.column) {
-			console.log('User with socket id ' + socket.id + ' sent an invalid device id when moving a piece.');
+		if (!to_position) {
+			console.log('User with socket id ' + socket.id + ' sent an invalid to position when moving a piece.');
 			return socket.emit('dataError', 'To position is required.');
 		}
 
@@ -689,7 +692,7 @@ waiting_room.on('connection', function (socket) {
 							query = query + " on e.entity = g.player_2 \
 						          where g.game = $1";
 						} else {
-							query = query + " on e.entity = g.player_2 \
+							query = query + " on e.entity = g.player_1 \
 						          where g.game = $1";
 						}
 						client.query(query, [game_row.game], function (err, result) {
@@ -762,7 +765,10 @@ waiting_room.on('connection', function (socket) {
 		waterfall([
 			function (callback) {
 				pg.connect(connectionString, function (err, client, done) {
-					client.query("update tb_waiting_list set invalidated = now() \
+					if(err){
+                         return console.log(err);
+                    }
+                    client.query("update tb_waiting_list set invalidated = now() \
 		where player = ( select entity from tb_entity where player_info ->> 'socket_id' = $1 )\
 		  and filled is null and invalidated is null returning player", [socket.id],
 						function (err, result) {
