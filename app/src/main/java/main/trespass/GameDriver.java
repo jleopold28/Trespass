@@ -316,6 +316,11 @@ public class GameDriver {
         //n.notifyTileChanges();
     }
 
+    public static void end(){
+        mSocket.disconnect();
+        g = null;
+    }
+
     public interface SocketEventInterface {
         void onDataError(String s);
 

@@ -1,5 +1,7 @@
 package main.trespass;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -42,16 +44,6 @@ public class GameBoard {
         return gameBoard[rowCount][colCount];
     }
     public void setMove(int startRow, int startCol, int endRow, int endCol){ //t1 is previous location , t2 is where you are moving to
-        //moving from T1 to T2
-        /**
-        int startRow = t1.getRow();
-        int startCol = t1.getCol();
-        int startNumber = t1.getNumber();
-        //boolean isPlayerPiece = t1.isPlayerPiece();
-
-        int endRow = t2.getRow();
-        int endCol = t2.getCol();
-        **/
         //set T1 to blank
         gameBoard[startRow][startCol].setBlank(true);
         //gameBoard[startRow][startCol].setIsPlayerPiece(false);
@@ -84,6 +76,7 @@ public class GameBoard {
      */
     public ArrayList<int[]> getValidTiles(int row, int col, boolean isPlayerPiece) {
         validTiles.clear();
+        Log.d("valid tiles", "row: " + row + "  col: " + col + "  isplayer: " + isPlayerPiece);
         if(isPlayerPiece) {
             forwardSlideValidation(row, col); //get the valid tiles when moving forward
             slideForwardLeftValidation(row, col);

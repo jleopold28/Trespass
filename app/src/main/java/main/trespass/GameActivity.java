@@ -141,6 +141,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                 }
             }
         });
+        g.end();
     }
 
     @Override
@@ -418,7 +419,8 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         //showEndGameDialog(true);
         if(g.myTurn) {
             if (g.gb.getTile(row, col).isBlank()) {
-                if (hasTileSelected && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1],g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]).isPlayerPiece()).contains(g.gb.getCoordinate(row, col)) && g.myTurn) {
+                if (hasTileSelected
+                        && g.gb.getValidTiles(prevTileCoordinate[0], prevTileCoordinate[1],g.gb.getTile(prevTileCoordinate[0],prevTileCoordinate[1]).isPlayerPiece()).contains(g.gb.getCoordinate(row, col))){
                     cleanBlankTile();
                     g.gb.setMove(prevTileCoordinate[0], prevTileCoordinate[1], row, col);
 
@@ -477,7 +479,6 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                     }
                     hasTileSelected = true;
                 }
-                hasTileSelected = true;
             }
         }
     }
