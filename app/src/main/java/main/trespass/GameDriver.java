@@ -21,7 +21,7 @@ import java.util.UUID;
  * Created by jleopold on 6/23/2015.
  */
 public class GameDriver {
-    static Player p;
+    protected static Player p;
     static InitializationObject init;
     static GameBoard gb = new GameBoard();
     //static boolean isTurn = true; // true if it is the player's turn; false if it the opponent's turn

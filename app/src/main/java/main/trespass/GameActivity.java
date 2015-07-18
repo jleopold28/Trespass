@@ -200,6 +200,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         startNewGame();
         GameDriver.setSocketListener(this);
         setOppoInfo(g.opponentUsername, g.opponentAvatar);
+        setPlayerInfo(g.p.getUsername(), g.p.getAvatar());
     }
 
     @Override
