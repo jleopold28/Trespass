@@ -89,7 +89,7 @@ public class GameDriver {
                 Log.e(TAG, "Expecting json string in onUserInfoListener.");
                 return;
             } catch(JSONException e){
-                Log.e(TAG, "Invalid json string in onUserInfoListener.");
+                Log.e(TAG, "Invalid json string in onUserInfoListener: " + (String)args[0]);
                 return;
             }
         }

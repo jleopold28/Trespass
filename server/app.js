@@ -389,7 +389,7 @@ waiting_room.on('connection', function (socket) {
 						user2_info.avatar = player2_info.avatar;
 						user2_info.tiles = player2_tiles;
 						user2_info.username = player2_info.name;
-						socket.emit('userInfo', player2_tiles);
+						socket.emit('userInfo', user2_info);
 						socket.emit('Game', game_row.game);
 
 						var user_info = {};
