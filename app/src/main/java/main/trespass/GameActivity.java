@@ -92,12 +92,14 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(c, json.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(c, json.toString(), Toast.LENGTH_LONG).show();
                 int prev_row = 0;
                 int prev_col = 0;
                 int to_row = 0;
                 int to_col = 0;
-
+                if(json.length() == 0){
+                    onInfo("Your turn.");
+                }
                 try {
                     JSONObject from = json.getJSONObject("from");
                     prev_row = 5 - from.getInt("row");

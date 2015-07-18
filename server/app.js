@@ -396,10 +396,10 @@ waiting_room.on('connection', function (socket) {
 
 	socket.on('start_game', function (input) {
 		var game = input.game;
-        var secret_number = input.secret_number;
-        var device_id = input.device_id;
+		var secret_number = input.secret_number;
+		var device_id = input.device_id;
 
-        if (!device_id) {
+		if (!device_id) {
 			console.log('User with socket id ' + socket.id + ' sent an invalid device_id when starting game.');
 			return socket.emit('dataError', 'Device id is required.');
 		}
@@ -471,7 +471,6 @@ waiting_room.on('connection', function (socket) {
 									if (err) {
 										return callback(err);
 									}
-									socket.emit('Info', 'The other player not ready.');
 									return console.log('The other player not ready.');
 								});
 							}
@@ -488,7 +487,6 @@ waiting_room.on('connection', function (socket) {
 									if (err) {
 										return callback(err);
 									}
-									socket.emit('Info', 'The other player not ready.');
 									return console.log('The other player not ready.');
 								});
 							}
@@ -542,7 +540,6 @@ waiting_room.on('connection', function (socket) {
 							}
 							var socket_id = result.rows[0].socket_id;
 							if (io.sockets.connected[socket_id]) {
-								socket.emit('Info', 'Game started.');
 								socket.emit('Move', ''); //Tell the user it's his/her turn.
 								socket.broadcast.to(socket_id).emit('Info', 'Game started');
 							} else {
@@ -765,10 +762,10 @@ waiting_room.on('connection', function (socket) {
 		waterfall([
 			function (callback) {
 				pg.connect(connectionString, function (err, client, done) {
-					if(err){
-                         return console.log(err);
-                    }
-                    client.query("update tb_waiting_list set invalidated = now() \
+					if (err) {
+						return console.log(err);
+					}
+					client.query("update tb_waiting_list set invalidated = now() \
 		where player = ( select entity from tb_entity where player_info ->> 'socket_id' = $1 )\
 		  and filled is null and invalidated is null returning player", [socket.id],
 						function (err, result) {
