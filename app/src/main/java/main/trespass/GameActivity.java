@@ -97,9 +97,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
                 int prev_col = 0;
                 int to_row = 0;
                 int to_col = 0;
-                if(json.length() == 0){
-                    onInfo("Your turn.");
-                }
+
                 try {
                     JSONObject from = json.getJSONObject("from");
                     prev_row = 5 - from.getInt("row");
@@ -196,6 +194,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         gameButtons[5][4] = (ImageButton) findViewById(R.id.IB54);
         startNewGame();
         GameDriver.setSocketListener(this);
+        onInfo("Your turn");
     }
 
     @Override
