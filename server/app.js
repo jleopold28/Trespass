@@ -301,7 +301,7 @@ waiting_room.on('connection', function (socket) {
 								if (result.rowCount > 0) {
 									var socket_id = result.rows[0].player_info.socket_id;
 									console.log("The other player's socket id: " + socket_id);
-
+									var player2_info = result.rows[0].player_info;
 									//Proceed to next.
 									if (io.sockets.connected[socket_id]) {
 										client.query("update tb_waiting_list \
@@ -311,7 +311,7 @@ waiting_room.on('connection', function (socket) {
 												client.end();
 												return callback(err);
 											}
-											return callback(null, waiting_list, wait_list_row, result.rows[0].player_info, client);
+											return callback(null, waiting_list, wait_list_row, player2_info, client);
 										});
 									} else {
 										console.log("The other player's socket id: " + socket_id + ' is invalid. Remove wait list entry.');
