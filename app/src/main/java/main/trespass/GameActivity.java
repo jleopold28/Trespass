@@ -278,13 +278,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
         String num54 = "num" + arr[1][4];
         gameButtons[5][4].setBackgroundResource(getResources().getIdentifier(num54, "drawable", this.getPackageName()));
 
-        //set up oppenent side
-        Log.d("test", "number00 in " + g.gb.getTile(0, 0).getNumber());
-        Log.d("test", "number01 in " + g.gb.getTile(0, 1).getNumber());
-        Log.d("test", "number02 in " + g.gb.getTile(0, 2).getNumber());
-        Log.d("test", "number03 in " + g.gb.getTile(0, 3).getNumber());
-        Log.d("test", "number04 in " + g.gb.getTile(0, 4).getNumber());
-
+        //Set the opponent side
         String num00 = "opponum" + g.gb.getTile(0, 0).getNumber();
         gameButtons[0][0].setBackgroundResource(getResources().getIdentifier(num00, "drawable", this.getPackageName()));
 

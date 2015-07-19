@@ -302,7 +302,6 @@ public class GameDriver {
         gb.getTile(5, 4).setIsPlayerPiece(true);
 
         //set up opponent numbers
-        Log.d("test", opponentTiles);
 
         gb.getTile(0, 0).setNumber(Integer.parseInt(opponentTiles.substring(9)));
         //gb.getTile(0,0).setNumber(4);

@@ -16,7 +16,9 @@
         android:columnCount="5"
         android:layout_below="@+id/textView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="58dp">
+        android:layout_marginTop="58dp"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentRight="false">
 
         <EditText
             android:layout_width="wrap_content"
@@ -126,7 +128,8 @@
         android:text="Select your secret number (0-9):"
         android:id="@+id/textView15"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -134,10 +137,10 @@
         android:inputType="number"
         android:ems="2"
         android:id="@+id/secretNumber"
+        android:maxLength="1"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/textView15"
-        android:layout_toEndOf="@+id/textView15"
-        android:maxLength="1"/>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -148,7 +151,8 @@
         android:layout_below="@+id/secretNumber"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="46dp" />
+        android:layout_marginTop="46dp"
+        android:layout_alignParentRight="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -158,7 +162,11 @@
         android:id="@+id/initFindMatchButton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="onClickFindMatch"/>
+        android:onClick="onClickFindMatch"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp" />
 
     <TextView
         android:layout_width="wrap_content"
