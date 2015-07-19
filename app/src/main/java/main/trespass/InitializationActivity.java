@@ -61,6 +61,10 @@ public class InitializationActivity extends Activity implements View.OnClickList
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed(){
+        startActivity(new Intent(this, MainActivity.class));
+    }
     public void fillArray(){
         int num00 = (num00text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num00text.getText().toString());
         int num01 = (num01text.getText().toString().trim().length() == 0) ? 0: Integer.parseInt(num01text.getText().toString());

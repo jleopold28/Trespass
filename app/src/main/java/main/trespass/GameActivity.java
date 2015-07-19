@@ -204,6 +204,23 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     }
 
     @Override
+    public void onBackPressed(){
+        new AlertDialog.Builder(this)
+                .setTitle("End Game?")
+                .setMessage("Are you sure you want to leave the game?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        g.end();
+                        startActivity(new Intent(GameActivity.this,InitializationActivity.class));
+                    }
+                })
+                .setNegativeButton(android.R.string.no,  new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_game, menu);
@@ -529,7 +546,7 @@ public class GameActivity extends Activity implements GameDriver.SocketEventInte
     public void showEndGameDialog(boolean ifWin) {
         String message;
         if (ifWin) {
-            message = "Grats! You Win!";
+            message = "Congrats! You Win!";
         } else {
             message = "You Lose!";
         }

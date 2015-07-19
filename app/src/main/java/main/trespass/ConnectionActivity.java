@@ -1,10 +1,14 @@
 package main.trespass;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -112,7 +116,17 @@ public class ConnectionActivity extends Activity implements GameDriver.SocketEve
 
     public void onGame() {
         // go to the next activity
-        startActivity(new Intent(ConnectionActivity.this, GameActivity.class));
+        // Intent for the activity to open when user selects the notification
+        Intent GameActivityIntent = new Intent(this, GameActivity.class);
+
+        // Use TaskStackBuilder to build the back stack and get the PendingIntent
+        TaskStackBuilder builder =
+                TaskStackBuilder.create(this)
+                        // add all of DetailsActivity's parents to the stack,
+                        // followed by DetailsActivity itself
+                        .addNextIntentWithParentStack(GameActivityIntent);
+
+        builder.startActivities();
     }
 
     public void onMove(JSONObject json) {
