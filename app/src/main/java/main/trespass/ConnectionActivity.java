@@ -2,6 +2,7 @@ package main.trespass;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Intent;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 
 public class ConnectionActivity extends Activity implements GameDriver.SocketEventInterface {
     GameDriver g;
-
+    private static boolean visible = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +30,7 @@ public class ConnectionActivity extends Activity implements GameDriver.SocketEve
     @Override
     protected void onStart(){
         super.onStart();
+        visible = true;
         findOpponent();
     }
     @Override
@@ -53,6 +55,11 @@ public class ConnectionActivity extends Activity implements GameDriver.SocketEve
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onStop(){
+        super.onStop();
+        visible = false;
+    }
     public void findOpponent() {
         //find the opponent
         g = GameDriver.getInstance();
@@ -121,6 +128,18 @@ public class ConnectionActivity extends Activity implements GameDriver.SocketEve
     }
 
     public void onGame() {
+        if(!visible) {
+            NotificationCompat.Builder mBuilder =
+                    new NotificationCompat.Builder(this)
+                            .setSmallIcon(android.R.drawable.ic_dialog_info)
+                            .setContentTitle("Trespass")
+                            .setContentText("Game Started!");
+
+            NotificationManager mNotifyMgr =
+                    (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            // Builds the notification and issues it.
+            mNotifyMgr.notify(001, mBuilder.build());
+        }
         // go to the next activity
         // Intent for the activity to open when user selects the notification
         Intent GameActivityIntent = new Intent(this, GameActivity.class);
